@@ -1,0 +1,44 @@
+<div class="order-modal-overlay is-open">
+    <div class="order-modal">
+        <button class="order-modal-close" type="button">
+            <svg class="order-modal-icons" width="14" height="14">
+                <use href="/src/img/sprite.svg#icon-x"></use>
+            </svg>
+        </button>
+        <h2 class="order-modal-title">Замовити зворотний зв’язок</h2>
+        <form class="order-modal-form">
+            <div class="order-modal-input-div">
+                <label class="lb-input" for="user-email">Email*</label>
+                <input
+                    class="order-modal-inp"
+                    type="email"
+                    id="user-email"
+                    name="user-email"
+                    placeholder="Email"
+                />
+            </div>
+            <div class="order-modal-input-div">
+                <label class="lb-input" for="user-phone">Телефон*</label>
+                <input
+                    class="order-modal-inp"
+                    type="tel"
+                    id="user-phone"
+                    name="user-phone"
+                    placeholder="+38 (099) 123 22 11"
+                />
+            </div>    
+            <div class="order-modal-input-div">
+                <label class="lb-input" for="user-comment">Коментар</label>
+                <textarea
+                    class="order-textarea"
+                    name="user-comment"
+                    placeholder="Type your message..."
+                    id="user-comment"
+                ></textarea>
+            </div>
+            <div class="order-modal-btn-div">
+                <button class="order-modal-btn" type="submit">Надіслати заявку</button>
+            </div>
+        </form>
+    </div>
+</div>
