@@ -1,42 +1,17 @@
 import axios from 'axios';
-
 import Swiper from 'swiper';
-import 'swiper/swiper-bundle.css';
+import { Navigation, Pagination } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
 
-const url = 'https://furniture-store.b.goit.study/api/feedbacks?limit=10';
+import iziToast from 'izitoast';
+import 'izitoast/dist/css/iziToast.min.css';
 
 // отримання розмітки
 const container = document.querySelector('.js-feedback-cart');
 const btnBack = document.querySelector('.js-btn-back');
 const btnForward = document.querySelector('.js-btn-forward');
-
-let cachedReviews = [];
-
-let page = 1;
-
-// обробник кнопки forward
-btnForward.addEventListener('click', onLoadForward);
-
-// обробник кнопки back
-
-btnBack.addEventListener('click', onLoadBack);
-
-// Функція для відображення відгуків для різних екранів
-
-function displayReviews(reviews) {
-  const screenWidth = window.innerWidth;
-  let reviewsToShow;
-
-  if (screenWidth < 768) {
-    reviewsToShow = reviews.slice(0, 1);
-  } else if (screenWidth < 1140) {
-    reviewsToShow = reviews.slice(0, 2);
-  } else {
-    reviewsToShow = reviews.slice(0, 3);
-  }
-
-  container.innerHTML = createMarkup(reviewsToShow);
-}
 
 // функція для округлення оцінки
 function roundRating(rating) {
@@ -67,79 +42,84 @@ function renderStars(rating, max = 5) {
   return stars;
 }
 
-async function fetchCustomerReviews(page = 1, limit = 10) {
-  const url = `https://furniture-store.b.goit.study/api/feedbacks?page=${page}&limit=${limit}`;
-  const { data } = await axios.get(url);
-  return data;
-}
-
-// Отримання та  відображення відгуків
-fetchCustomerReviews(page)
-  .then(response => {
-    cachedReviews = response.feedbacks;
-    displayReviews(cachedReviews);
-    updateButtons(response);
-  })
-  .catch(error => {
-    console.error('Error fetching reviews:', error);
-  });
-
 // Функція для створення розмітки
 function createMarkup(arr) {
   return arr
     .map(({ name, descr, rate }) => {
       const starsHTML = renderStars(roundRating(rate));
+      // Кожен відгук тепер це swiper-slide
       return `
-        <li class="feedback-item">
-          <div class="star-rating">${starsHTML}</div>
-          <p class="feedback-descr">"${descr}"</p>
-          <p class="feedback-name">${name}</p>
-        </li>
+        <div class="swiper-slide">
+          <div class="feedback-item">
+            <div class="star-rating">${starsHTML}</div>
+            <p class="feedback-descr">"${descr}"</p>
+            <p class="feedback-name">${name}</p>
+          </div>
+        </div>
       `;
     })
     .join('');
 }
 
-// Обробник події resize
-window.addEventListener('resize', () => {
-  displayReviews(cachedReviews);
-});
-
-async function onLoadForward() {
-  page++;
+// Головна і єдина функція, що все завантажує та ініціалізує
+async function initFeedbackSlider() {
+  const container = document.querySelector('.js-feedback-cart');
+  if (!container) return;
   try {
-    const data = await fetchCustomerReviews(page);
-    console.log(data);
-    if (!data.feedbacks.length) {
-      page--;
-      alert('Відгуків більше немає!');
+    const response = await axios.get(
+      'https://furniture-store.b.goit.study/api/feedbacks?limit=10'
+    );
+    const reviews = response.data.feedbacks;
+    if (!reviews || reviews.length === 0) {
+      iziToast.error({
+        title: 'Error',
+        message: 'Щось пішло не так. Спробуйте пізніше.',
+        position: 'topRight',
+      });
       return;
     }
-    cachedReviews = data.feedbacks;
-    displayReviews(cachedReviews);
-    updateButtons(data);
+    container.innerHTML = createMarkup(reviews);
+    const enableLoop = reviews.length > 3;
+
+    // Ініціалізуємо Swiper
+    const swiper = new Swiper('.feedback-slider', {
+      // ВАЖЛИВО: Реєструємо ОБИДВА модулі - Navigation та Pagination
+      modules: [Navigation, Pagination],
+      slidesPerGroup: 1,
+      slidesPerView: 1,
+      spaceBetween: 16,
+      // loop: enableLoop,
+      // Налаштування для пагінації (крапочок)
+      pagination: {
+        el: '.swiper-pagination', // <-- вказуємо клас контейнера
+        clickable: true, // <-- робимо крапки клікабельними
+      },
+      // Налаштування для навігації (стрілок)
+      navigation: {
+        nextEl: '.js-btn-forward',
+        prevEl: '.js-btn-back',
+      },
+      // Адаптивність
+      breakpoints: {
+        768: {
+          slidesPerGroup: 2,
+          slidesPerView: 2,
+          spaceBetween: 24,
+        },
+        1440: {
+          slidesPerGroup: 3,
+          slidesPerView: 3,
+          spaceBetween: 24,
+        },
+      },
+    });
   } catch (error) {
-    alert(error.message);
+    iziToast.error({
+      title: 'Error',
+      message: 'Щось пішло не так. Спробуйте пізніше.',
+      position: 'topRight',
+    });
   }
 }
-
-async function onLoadBack() {
-  if (page > 1) page--;
-  try {
-    const data = await fetchCustomerReviews(page);
-    cachedReviews = data.feedbacks;
-    displayReviews(cachedReviews);
-    updateButtons(data);
-  } catch (error) {
-    alert(error.message);
-  }
-}
-
-// Функція блокування/розблокування кнопок
-function updateButtons(data) {
-  // Отключаем back на первой странице
-  btnBack.disabled = page === 1;
-
-  // Отключаем forward, если отзывов меньше лимита или их нет (значит, это последняя страница)
-  btnForward.disabled = !data.feedbacks.length || data.feedbacks.length < 10;
-}
+// Запускаємо всю логіку
+initFeedbackSlider();

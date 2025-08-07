@@ -5,7 +5,9 @@
   letter-spacing: 0.01em;
   margin-bottom: 24px;
 }
-
+.icon-feedback {
+  fill: #080c09;
+}
 .feedback-text {
   font-weight: 400;
   font-size: 16px;
@@ -13,90 +15,72 @@
   color: #080c09;
   margin-bottom: 80px;
 }
-
 .star-rating {
   margin-bottom: 24px;
 }
-
 .feedback-descr {
   font-weight: 500;
   font-size: 18px;
   margin-bottom: 24px;
 }
-
 .feedback-name {
   font-weight: 700;
   font-size: 16px;
 }
 
+/* 
+кнопки та свайпер */
+
+.swiper-pagination {
+  position: static !important;
+}
+
+.nav-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-top: 32px;
+}
+
+.swiper-pagination {
+  display: flex;
+  align-items: center;
+  width: auto !important;
+  margin: 0;
+  padding: 0;
+}
+
 .button-container {
   display: flex;
-  justify-content: flex-end;
-  width: 100%;
-  margin-top: 104px;
+  gap: 16px;
+  align-items: center;
 }
 
 .btn-circle {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-
-  border: 1px solid rgba(8, 12, 9, 0.15);
-  border-radius: 100px;
-  padding: 12px;
   width: 48px;
   height: 48px;
-  background: #f2f2f2;
-
-  margin-left: 16px;
-  transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border-radius: 50%;
+  background-color: #f2f2f2;
+  border: 1px solid rgba(8, 12, 9, 0.15);
+  transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1),
+    color 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  color: #333;
 }
-
 .btn-circle:hover,
 .btn-circle:focus {
-  background-color: #975052;
+  background-color: #975052 !important;
 }
-
 .btn-circle:active {
-  background-color: #6b0609;
+  background-color: #6b0609 !important;
   transform: scale(0.95);
 }
 
-@media (min-width: 768px) {
-  .feedback-cart {
-    display: flex;
-    gap: 24px;
-  }
-
-  .feedback-item {
-    flex-basis: calc((100% - 24px) / 2);
-  }
-  .feedback-title {
-    font-size: 48px;
-  }
-
-  .feedback-text {
-    font-size: 18px;
-  }
-  .feedback-descr {
-    font-size: 20px;
-  }
-  .button-container {
-    margin-top: 48px;
-  }
-}
-
-@media (min-width: 1440px) {
-  .feedback-item {
-    flex-basis: calc((100% - 48px) / 3);
-  }
-  .feedback-text {
-  }
-}
-
-/* зірки */
-
+/* зірочка */
 .star {
   display: inline-block;
   font-size: 28px;
