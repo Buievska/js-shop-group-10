@@ -1,53 +1,34 @@
 const modal = document.getElementById('modal');
 const modalBody = document.getElementById('modal-body');
 const modalClose = document.getElementById('modal-close');
-// const btn = document.getElementByClassName('details-btn');
 const list = document.querySelector('.furniture-list');
 let result;
 
 const fetchProducts = () => {
   fetch('https://furniture-store.b.goit.study/api/furnitures?page=1&limit=10')
     .then(response => {
-      // Проверка успешности ответа
       if (!response.ok) {
-        throw new Error('Ошибка сети');
+        throw new Error('Error');
       }
 
       return response.json();
     })
     .then(data => {
-      console.log(data); // Здесь обработка полученных данных
       result = data;
-
-      if (result?.furnitures) {
-        list.innerHTML = `
-            <div>
-                ${result?.furnitures.map(item => {
-                  return `<button
-                        data-id="${item._id}"
-                        class="details-btn"
-                      >
-                        Open Modal
-                      </button>`;
-                })}
-            </div>
-        `;
-
-        const btn = document.querySelectorAll('.details-btn');
-        btn.forEach(elem => {
-          elem.addEventListener('click', e => {
-            const id = e.target.dataset.id;
-            const item = result?.furnitures?.find(f => f._id === id);
-            if (item) showModal(item);
-          });
-        });
-      }
     })
     .catch(error => {
-      console.error('Ошибка при получении данных:', error);
+      console.error('Error while fetching furnitures', error);
     });
 };
 fetchProducts();
+
+document.querySelector('.furniture-list').addEventListener('click', e => {
+  if (e.target.matches('.details-btn')) {
+    const id = e.target.dataset.id;
+    const item = result?.furnitures?.find(f => f._id === id);
+    if (item) showModal(item);
+  }
+});
 
 // Функція рендерингу зірочок (для рейтингу):
 function renderStars(rating = 0) {
@@ -96,7 +77,7 @@ function showModal(furniture) {
   modal.classList.remove('hidden');
   document.body.style.overflow = 'hidden';
 
-  const swatches = document.querySelectorAll('.color-swatch');
+  const swatches = document.querySelectorAll('.modal .color-swatch');
   swatches[0].classList.add('selected');
 
   swatches.forEach(color => {
@@ -133,18 +114,3 @@ window.addEventListener('click', e => {
 window.addEventListener('keydown', e => {
   if (e.key === 'Escape') closeModal();
 });
-
-// const btn = document.querySelectorAll('.details-btn');
-// btn.forEach(elem => {
-//   console.log(btn);
-//   elem.addEventListener('click', e => {
-//     console.log(result);
-//     // const btn = e.target.closest('.details-btn');
-//     const id = e.target.dataset.id;
-//     console.log('asd');
-//     console.log(result);
-//     //   if (!btn) return;
-//     const item = result?.furnitures?.find(f => f._id === id);
-//     if (item) showModal(item);
-//   });
-// });
