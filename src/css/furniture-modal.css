@@ -116,7 +116,7 @@
   flex-shrink: 0;
 }
 
-.color-swatch {
+.modal .color-swatch {
   display: block;
   width: 32px;
   height: 32px;
@@ -125,7 +125,7 @@
   overflow: hidden;
 }
 
-.color-swatch.selected {
+.modal .color-swatch.selected {
   border: 4px solid #838584;
 }
 
