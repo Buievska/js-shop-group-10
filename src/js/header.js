@@ -78,12 +78,12 @@ export function initHeaderNavigation() {
   
 
 
-/*для main.js */
+/*для main.js 
 import { initHeaderNavigation } from './header.js';
 
 document.addEventListener('DOMContentLoaded', () => {
   initHeaderNavigation();
 });
-
+*/
 
  
