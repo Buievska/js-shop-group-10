@@ -81,6 +81,7 @@ async function initFeedbackSlider() {
     container.innerHTML = createMarkup(reviews);
     const enableLoop = reviews.length > 3;
 
+    const totalBullets = 5; // завжди 5 крапок
     // Ініціалізуємо Swiper
     const swiper = new Swiper('.feedback-slider', {
       // ВАЖЛИВО: Реєструємо ОБИДВА модулі - Navigation та Pagination
@@ -88,13 +89,19 @@ async function initFeedbackSlider() {
       slidesPerGroup: 1,
       slidesPerView: 1,
       spaceBetween: 16,
+      loop: true, // включаємо безкінечний цикл
       // loop: enableLoop,
       // Налаштування для пагінації (крапочок)
       pagination: {
-        el: '.swiper-pagination', // <-- вказуємо клас контейнера
-        clickable: true, // <-- робимо крапки клікабельними
-      },
-      // Налаштування для навігації (стрілок)
+        el: '.swiper-pagination',
+        clickable: true,
+        renderBullet: function (index, className) {
+          if (index < totalBullets) {
+            return `<span class="${className}"></span>`;
+          }
+          return '';
+        },
+      }, // ← закрили pagination
       navigation: {
         nextEl: '.js-btn-forward',
         prevEl: '.js-btn-back',
@@ -102,16 +109,26 @@ async function initFeedbackSlider() {
       // Адаптивність
       breakpoints: {
         768: {
-          slidesPerGroup: 2,
+          slidesPerGroup: 1,
           slidesPerView: 2,
           spaceBetween: 24,
         },
         1440: {
-          slidesPerGroup: 3,
+          slidesPerGroup: 1,
           slidesPerView: 3,
           spaceBetween: 24,
         },
       },
+    });
+
+    swiper.on('slideChange', () => {
+      const bullets = document.querySelectorAll('.swiper-pagination-bullet');
+      bullets.forEach(b =>
+        b.classList.remove('swiper-pagination-bullet-active')
+      );
+
+      const activeIndex = swiper.realIndex % totalBullets;
+      bullets[activeIndex].classList.add('swiper-pagination-bullet-active');
     });
   } catch (error) {
     iziToast.error({
