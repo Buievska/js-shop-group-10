@@ -1,5 +1,7 @@
 <svg aria-hidden="true" style="position:absolute;width:0;height:0;overflow:hidden" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    
+   <symbol id="icon-down" viewBox="0 0 32 32">
+<path stroke-linejoin="miter" stroke-linecap="butt" stroke-miterlimit="4" stroke-width="0.9697" d="M22.901 11.649c0.095-0.095 0.248-0.095 0.343 0l0.343 0.343c0.095 0.095 0.095 0.248 0 0.343l-7.415 7.415c-0.095 0.095-0.248 0.095-0.343 0l-7.415-7.415c-0.095-0.095-0.095-0.248 0-0.343l0.343-0.343c0.095-0.095 0.248-0.095 0.343 0l6.901 6.901 6.901-6.901z"></path>
+</symbol>
   </defs>
 </svg>
