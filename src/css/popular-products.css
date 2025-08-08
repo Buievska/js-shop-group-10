@@ -1,0 +1,199 @@
+
+.popular-section {
+  padding: 40px 16px;
+  width: 100%;
+}
+
+.container-popular {
+  display: block;
+  margin: 0 auto;
+  max-width: 1318px;
+}
+
+.section-title {
+  font-family: "Raleway", sans-serif;
+  font-weight: 700;
+  font-size: 28px;
+  line-height: 1.2;
+  letter-spacing: 0.01em;
+  text-align: center;
+  color: #080c09;
+  margin-bottom: 24px;
+}
+
+.popular-slider-wrapper {
+  overflow: hidden;
+  margin-top: 16px;
+}
+
+.popular-slider {
+  display: flex;
+  gap: 16px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.furniture-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  flex: 0 0 calc((100% - 16px) / 1);
+  height: auto;
+  
+}
+
+.card-img {
+  width: 282px;          
+  height: 256px;         
+  object-fit: cover;     
+  border-radius: 8px;
+  flex-shrink: 0;
+  align-self: center;
+}
+
+.card-title {
+  margin-top: 12px;
+  margin-bottom: 8px;
+  font-family: "Raleway", sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 1.6;
+  color: #080c09;
+}
+
+.color-dot {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 1px solid #c7c3bb;
+}
+
+.color-list {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 16px;
+  margin-bottom: 8px;
+}
+
+.card-price {
+  font-family: "Raleway", sans-serif;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 1.6;
+  color: #080c09;
+  margin-bottom: 12px;
+}
+
+.details-btn {
+  border-radius: 100px;
+  padding: 10px 24px;
+  height: 46px;
+  box-shadow: 0 1px 2px rgba(8, 12, 9, 0.05), inset 0 -2px 1px rgba(8, 12, 9, 0.05), inset 0 0 0 1px rgba(8, 12, 9, 0.05);
+  background: rgba(8, 12, 9, 0.05);
+  font-family: "Raleway", sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 1.6;
+  color: #080c09;
+  text-align: center;
+  border: none;
+  width: 100%;
+  margin-top: auto;
+}
+
+
+.popular-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 12px;
+}
+
+.slider-indicators {
+  display: flex;
+  gap: 8px;
+}
+
+.slider-indicators span {
+  width: 10px;
+  height: 10px;
+  background: #ccc;
+  border-radius: 50%;
+}
+
+.slider-indicators span.active {
+  background: #333;
+}
+
+.slider-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+.slider-btn {
+  border: 1px solid rgba(8, 12, 9, 0.15);
+  border-radius: 100px;
+  padding: 12px;
+  width: 40px;
+  height: 40px;
+  background: #f2f2f2;
+}
+
+.slider-btn:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.card-title,
+.color-list,
+.card-price,
+.details-btn {
+  text-align: left;
+}
+
+
+@media (min-width: 768px) {
+  .section-title {
+    font-size: 36px;
+    margin-bottom: 28px;
+  }
+
+  .popular-slider {
+    gap: 20px;
+  }
+
+  .furniture-card {
+    align-items: center; 
+    flex: 0 0 calc((100% - 20px) / 2);
+  }
+
+  .card-img {
+    height: 240px;
+  }
+}
+
+@media (min-width: 1440px) {
+  .popular-section {
+    padding: 80px 64px;
+  }
+
+  .section-title {
+    font-size: 48px;
+    margin-bottom: 32px;
+  }
+
+  .popular-slider {
+    gap: 24px;
+  }
+
+  .furniture-card {
+    flex: 0 0 calc((100% - 72px) / 4);
+    height: 435px;
+  }
+
+  .card-img {
+    height: 256px;
+  }
+}
