@@ -18,9 +18,15 @@
       href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap"
       rel="stylesheet"
     />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css"
+    />
+
     <script type="module" crossorigin src="/js-shop-group-10/index.js"></script>
-    <link rel="modulepreload" crossorigin href="/js-shop-group-10/assets/vendor-BLO6kU33.js">
-    <link rel="stylesheet" crossorigin href="/js-shop-group-10/assets/index-E_YgzaR9.css">
+    <link rel="modulepreload" crossorigin href="/js-shop-group-10/assets/vendor-CINvsALW.js">
+    <link rel="stylesheet" crossorigin href="/js-shop-group-10/assets/vendor-BlEjEAQG.css">
+    <link rel="stylesheet" crossorigin href="/js-shop-group-10/assets/index-De0wRUcZ.css">
   </head>
 
   <body>
@@ -160,7 +166,36 @@
       
 
       <!-- Feedback Section -->
-      
+      <section id="feedback" class="feedback">
+  <div class="container">
+    <h2 class="feedback-title">Відгуки клієнтів</h2>
+    <p class="feedback-text">
+      Дізнайтеся, що кажуть наші задоволені клієнти про нашу меблі.
+    </p>
+
+    <div class="swiper feedback-slider">
+      <div class="swiper-wrapper js-feedback-cart"></div>
+    </div>
+
+    <div class="nav-row">
+      <div class="swiper-pagination"></div>
+
+      <div class="button-container">
+        <button class="btn-circle js-btn-back">
+          <svg class="icon-feedback" width="25" height="25">
+            <use href="/js-shop-group-10/assets/sprite-g2yojUx4.svg#icon-left-arrow-alt"></use>
+          </svg>
+        </button>
+        <button class="btn-circle js-btn-forward">
+          <svg class="icon-feedback" width="25" height="25">
+            <use href="/js-shop-group-10/assets/sprite-g2yojUx4.svg#icon-right-arrow-alt"></use>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
     </main>
 
     <footer class="footer">
@@ -275,5 +310,6 @@
 </div>
 <button class="order-modal-btn btn-btn"> hi</button>
 
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
   </body>
 </html>
