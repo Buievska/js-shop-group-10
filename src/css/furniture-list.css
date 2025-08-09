@@ -1,0 +1,357 @@
+/* === 📱 Mobile First === */
+
+.furniture-section {
+  padding: 40px 0;
+}
+
+.section-title {
+  font-weight: 700;
+  margin-bottom: 16px;
+  font-size: 48px;
+  line-height: 120%;
+  letter-spacing: 0.01em;
+  color: #000;
+}
+
+.section-subtitle {
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 160%;
+  color: #666;
+  margin-bottom: 40px;
+}
+
+/* Категорії */
+.category-list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-auto-rows: 122px;
+  gap: 16px;
+  list-style: none;
+  margin: 0 auto 40px;
+  justify-content: center;
+}
+
+.category-btn-tile {
+  position: relative;
+  border: none;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.category-btn-tile:hover {
+  transform: scale(1.02);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+.category-btn-tile img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+  display: block;
+}
+
+.category-label {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 140%;
+  letter-spacing: 0.01em;
+  color: #fff;
+  text-align: center;
+  width: 134px;
+}
+
+.category-btn-tile.active::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border: 8px solid #6b0609;
+  border-radius: 8px;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.category-btn-tile.active::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 8px;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Сітка меблів */
+.furniture-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 24px;
+  list-style: none;
+  margin-bottom: 40px;
+}
+
+.furniture-item {
+  display: flex;
+  flex-direction: column;
+  width: 335px;
+  height: 450px;
+  min-width: 276px;
+  box-sizing: border-box;
+  border: 1px solid #eee;
+  border-radius: 16px;
+  background: #fff;
+  overflow: hidden;
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.furniture-item:hover {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
+}
+
+.furniture-item-content {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 160%;
+}
+
+.furniture-item-content > h3 {
+  margin: 16px 0 8px;
+}
+
+.details-btn {
+  margin-top: auto;
+  padding: 10px 24px;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 160%;
+  color: #080c09;
+  border-radius: 100px;
+  border: none;
+  transition: background-color 0.3s;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05),
+    inset 0 -2px 1px rgba(0, 0, 0, 0.05), inset 0 0 0 1px rgba(0, 0, 0, 0.05);
+}
+
+.details-btn:hover,
+.details-btn:focus {
+  background-color: #6b0609;
+  color: #fff;
+  outline: none;
+}
+
+/* Кнопка "Завантажити більше" */
+.load-more-mobile {
+  display: block;
+  width: 335px;
+  height: 46px;
+  margin: auto;
+  padding: 10px 24px;
+  font-size: 16px;
+  border-radius: 100px;
+  background-color: #6b0609;
+  color: white;
+
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 160%;
+
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.load-more-mobile:hover {
+  background-color: #975052;
+}
+
+/* Кольорові круги */
+.color-swatch {
+  border-radius: 64px;
+  border: 1px solid #201a19;
+  width: 24px;
+  height: 24px;
+  display: inline-block;
+  margin-right: 16px;
+  margin-bottom: 8px;
+  box-sizing: border-box;
+}
+
+/* Пагінація */
+.pagination-wrapper {
+  display: flex;
+  justify-content: center;
+}
+
+.pagination {
+  display: none;
+  justify-content: center;
+  gap: 4px;
+}
+
+.pagination button:not(.btn-circle) {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 160%;
+  border-radius: 100px;
+  padding: 12px;
+  width: 56px;
+  height: 46px;
+  border: none;
+  cursor: pointer;
+  background-color: transparent;
+  box-shadow: none;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.pagination button:hover,
+.pagination button:focus {
+  background-color: #975052;
+  color: white;
+}
+
+.pagination button.active {
+  background-color: #6b0609;
+  color: white;
+}
+
+.pagination button:disabled {
+  font-size: 18px;
+  color: #ccc;
+  cursor: not-allowed;
+}
+
+/* Круглі кнопки пагінації */
+.btn-circle {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border-radius: 50%;
+  background-color: #f2f2f2;
+  border: 1px solid rgba(8, 12, 9, 0.15);
+  transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1),
+    color 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  color: #333;
+}
+
+.btn-circle:hover:not(:disabled) {
+  background-color: #975052;
+  border-color: #6b0609;
+  color: white;
+}
+
+.btn-circle:disabled {
+  background-color: #f5f5f5;
+  border-color: #e0e0e0;
+  color: #ccc;
+  cursor: not-allowed;
+}
+
+.btn-circle svg {
+  fill: currentColor;
+}
+
+.pagination-dots {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.pagination-dots .dot {
+  width: 2px;
+  height: 2px;
+  background-color: #000;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+/* Сховані елементи */
+.hidden {
+  display: none !important;
+}
+
+/* === 🖥️ Tablet & Desktop === */
+@media (min-width: 768px) and (max-width: 1439px) {
+  .furniture-item {
+    width: 340px;
+    height: 460px;
+  }
+
+  .load-more-mobile {
+    display: none;
+  }
+
+  .category-list {
+    gap: 24px;
+    grid-template-columns: repeat(auto-fill, minmax(158px, 1fr));
+  }
+
+  .category-btn-tile {
+    width: 158px;
+    height: 122px;
+  }
+
+  .pagination {
+    display: flex;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+@media (min-width: 1440px) {
+  .furniture-item {
+    width: 300px;
+    height: 435px;
+  }
+
+  .category-list {
+    grid-template-columns: repeat(7, 1fr);
+    grid-auto-rows: 122px;
+    gap: 24px;
+    max-width: 1312px;
+  }
+
+  .furniture-list {
+    gap: 40px;
+  }
+
+  .pagination {
+    display: flex;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+/* === Мобільні пристрої: приховати пагінацію === */
+@media (max-width: 767px) {
+  .pagination {
+    display: none;
+  }
+
+  html {
+    scroll-behavior: auto;
+  }
+}

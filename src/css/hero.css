@@ -1,0 +1,97 @@
+.hero-section {
+  background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+    image-set(
+      url('/img/hero/bg-hero-mobile.jpg') 1x,
+      url('/img/hero/bg-hero-mobile-2x.jpg') 2x
+    );
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  padding: 160px 0;
+}
+
+.hero-main-title {
+  font-weight: 700;
+  font-size: 40px;
+  line-height: 1.2;
+  letter-spacing: 0.01em;
+  margin-bottom: 24px;
+  color: #fff;
+}
+
+.hero-title {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.6;
+  margin-bottom: 32px;
+  color: #fff;
+}
+
+.hero-feedback-btn {
+  display: block;
+  border-radius: 100px;
+  padding: 10px 24px;
+  max-width: 335px;
+  height: 46px;
+  box-shadow: 0 1px 2px 0 rgba(8, 12, 9, 0.05),
+    inset 0 -2px 1px 0 rgba(0, 0, 0, 0.2), inset 0 0 0 1px rgba(8, 12, 9, 0.15),
+    inset 0 2px 1px 0 rgba(255, 255, 255, 0.25),
+    inset 0 32px 24px 0 rgba(255, 255, 255, 0.05);
+  background: #6b0609;
+  font-weight: 500;
+  line-height: 1.6;
+  color: #fff;
+  margin: 0 auto;
+  text-align: center;
+  transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out,
+    transform 0.1s ease-in-out;
+}
+
+.hero-feedback-btn:hover,
+.hero-feedback-btn:focus {
+  opacity: 0.5;
+}
+
+.hero-feedback-btn:active {
+  box-shadow: inset 0 1px 2px 0 rgba(0, 0, 0, 0.25);
+  transform: translateY(1px);
+}
+
+@media screen and (min-width: 768px) {
+  .hero-section {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+      image-set(
+        url('/img/hero/bg-hero-tablet.jpg') 1x,
+        url('/img/hero/bg-hero-tablet-2x.jpg') 2x
+      );
+    padding: 36px 0;
+  }
+
+  .hero-main-title {
+    font-size: 56px;
+  }
+
+  .hero-title {
+    font-size: 18px;
+  }
+
+  .hero-feedback-btn {
+    max-width: 209px;
+    margin: 0;
+  }
+
+  .hero-text {
+    width: 560px;
+  }
+}
+
+@media screen and (min-width: 1440px) {
+  .hero-section {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+      image-set(
+        url('/img/hero/bg-hero-dekstop.jpg') 1x,
+        url('/img/hero/bg-hero-dekstop-2x.jpg') 2x
+      );
+    padding: 92px 0;
+  }
+}

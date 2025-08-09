@@ -13,3 +13,5 @@
 - JavaScript (модульний підхід)
 - Vite (збірка і запуск проєкту)
 - Git + GitHub (спільна розробка)
+---
+Посилання на живу сторінку: https://buievska.github.io/js-shop-group-10/
