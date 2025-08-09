@@ -139,8 +139,8 @@ function createArrowButton(
   if (!disabled && onClick) btn.addEventListener('click', onClick);
 
   const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-  svg.setAttribute('width', '20');
-  svg.setAttribute('height', '20');
+  svg.setAttribute('width', '25');
+  svg.setAttribute('height', '25');
 
   const use = document.createElementNS('http://www.w3.org/2000/svg', 'use');
   use.setAttributeNS(
