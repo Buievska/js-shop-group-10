@@ -237,14 +237,6 @@
   cursor: not-allowed;
 }
 
-.pagination svg {
-  width: 14px;
-  height: 14px;
-  fill: currentColor;
-  stroke: currentColor;
-  stroke-width: 1px;
-}
-
 /* Круглі кнопки пагінації */
 .btn-circle {
   width: 48px;
@@ -275,8 +267,6 @@
 }
 
 .btn-circle svg {
-  width: 24px;
-  height: 24px;
   fill: currentColor;
 }
 
