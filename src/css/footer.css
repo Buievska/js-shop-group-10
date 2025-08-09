@@ -33,32 +33,19 @@
 .logo-footer-icon {
   fill: #ffffff;
 }
-.social-icon-youtube {
+
+.social-icon {
   fill: #ffffff;
 }
-.social-icon-instagram {
+.social-icon:hover,
+.social-icon:focus {
   fill: #080c09;
 }
-.social-icon-facebook {
-  fill: #ffffff;
-}
+
 .copyright {
   font-size: 12px;
   margin-left: auto;
   margin-right: auto;
-}
-
-.nav-linck:hover,
-.nav-linck:focus {
-  opacity: 0.5;
-  background: #6b0609;
-}
-
-.nav-link:hover::after,
-.nav-link:focus::after,
-.nav-link.active::after {
-  background-color: #6b0609;
-  transform: translateX(-50%) scaleX(1);
 }
 
 @media only screen and (min-width: 768px) {
