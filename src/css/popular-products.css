@@ -1,4 +1,4 @@
-* === Глобальні змінні для єдності між CSS і JS === */
+
 :root { --card-w: 280px; --gap: 16px; }   /* mobile */
 @media (min-width: 768px)  { :root { --card-w: 340px; --gap: 20px; } }  /* tablet */
 @media (min-width: 1440px) { :root { --card-w: 310px; --gap: 24px; } }  /* desktop */
@@ -25,48 +25,44 @@
   margin-bottom: 24px;
 }
 
-/* Обгортка – саме вона скролиться */
 .popular-slider-wrapper {
   overflow-x: auto;
-  overflow-y: hidden;
-  /* за бажанням – "прилипання" по сторінках:
-     scroll-snap-type: x mandatory; */
-}
+  overflow-y: hidden;}
+ 
 
-/* Стрічка карток завжди ширша за вікно */
 .popular-slider {
   display: flex;
-  gap: var(--gap);           /* один-єдиний gap */
+  gap: 16px;           
   list-style: none;
   padding: 0;
   margin: 0;
   width: max-content;
 }
 
-/* Фіксована ширина картки = точні кроки прокрутки */
+
 .furniture-card {
   box-sizing: border-box;
-  flex: 0 0 var(--card-w);
+  flex: 0 0 auto;
   width: var(--card-w);
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  /* якщо вмикаєш scroll-snap:
-     scroll-snap-align: start; */
+  
 }
 
-/* Зображення рівне ширині картки на всіх брейках */
+
 .card-img {
   width: 100%;
-  height: 231px;        /* mobile */
+  height: 231px;        
   object-fit: cover;
   border-radius: 8px;
   flex-shrink: 0;
-  margin: 0 auto;       /* центр на моб/таб */
+  margin: 0 auto;  
+  
 }
 @media (min-width: 768px)  { .card-img { height: 281px; } }
 @media (min-width: 1440px) {
-  .card-img { height: 256px; margin: 0; }  /* на десктопі без автоцентр */
+  .card-img { height: 256px; margin: 0; }  
 }
 
 .card-content {
@@ -130,6 +126,18 @@
   margin-top: auto;
 }
 
+.details-btn:hover {
+  box-shadow: 0 1px 2px 0 rgba(8, 12, 9, 0.05), inset 0 -2px 1px 0 rgba(0, 0, 0, 0.2), inset 0 0 0 1px rgba(8, 12, 9, 0.15), inset 0 2px 1px 0 rgba(255, 255, 255, 0.25), inset 0 32px 24px 0 rgba(255, 255, 255, 0.05);
+background: #6b0609;
+opacity: 0.5;
+color: #fff;
+}
+
+.details-btn:active {
+  box-shadow: 0 1px 2px 0 rgba(8, 12, 9, 0.05), inset 0 -2px 1px 0 rgba(0, 0, 0, 0.2), inset 0 0 0 1px rgba(8, 12, 9, 0.15), inset 0 2px 1px 0 rgba(255, 255, 255, 0.25), inset 0 32px 24px 0 rgba(255, 255, 255, 0.05);
+background: #6b0609;
+}
+
 .popular-controls {
   display: flex;
   justify-content: space-between;
@@ -158,20 +166,33 @@
 .slider-btn:hover:not(:disabled),
 .slider-btn:focus-visible:not(:disabled) {
   transform: scale(1.05);
-  background: #e9e9e9;
-  border-color: rgba(8, 12, 9, 0.25);
+  background: #975052;
+  border-color: 1px solid rgba(8, 12, 9, 0.15);
   outline: none;
+  
 }
-.slider-btn:active:not(:disabled) { transform: scale(0.98); }
-.slider-btn:disabled { opacity: 0.4; cursor: default; pointer-events: none; }
-.slider-btn .svg { width: 24px; height: 24px; display: block; fill: currentColor; }
+.slider-btn:active:not(:disabled) { 
+  background: #6b0609; 
+  transform: scale(0.98); 
+}
+.slider-btn:disabled { 
+  opacity: 0.4; 
+  cursor: default; 
+  pointer-events: none; 
+}
 
-/* Tablet tweaks */
+.slider-btn .svg { width: 24px; 
+  height: 24px;
+   display: block; 
+   fill: currentColor; 
+  }
+
+
 @media (min-width: 768px) {
   .section-title { font-size: 36px; margin-bottom: 28px; }
 }
 
-/* Desktop tweaks */
+
 @media (min-width: 1440px) {
   .popular-section { padding: 80px 64px; }
   .section-title { font-size: 48px; margin-bottom: 32px; }

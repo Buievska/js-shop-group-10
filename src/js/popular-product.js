@@ -1,21 +1,21 @@
-// ====== DOM ======
-const slider     = document.getElementById('popular-slider');            // <ul>
-const scroller   = document.querySelector('.popular-slider-wrapper');    // обгортка (скрол-контейнер)
+
+const slider     = document.getElementById('popular-slider');            
+const scroller   = document.querySelector('.popular-slider-wrapper');    
 const btnLeft    = document.getElementById('btn-left');
 const btnRight   = document.getElementById('btn-right');
 const indicators = document.getElementById('slider-indicators');
 
-// ====== STATE ======
+
 const BASE_URL   = 'https://furniture-store.b.goit.study/api';
-const LIMIT      = 4;     // тягнемо по 4 за раз
-let page         = 1;     // сторінка бекенду
-let totalItems   = null;  // загальна к-сть (з бекенду)
+const LIMIT      = 4;     
+let page         = 1;     
+let totalItems   = null;  
 let isLoading    = false;
 
-let pageCount    = 0;     // к-сть «сторінок» = ceil(total/perView)
-let currentPage  = 0;     // 0-based
+let pageCount    = 0;     
+let currentPage  = 0;    
 
-// ====== API (із підстраховкою маршрутів) ======
+
 async function fetchPopularFurniture({ page, limit }) {
   const candidates = [
     `${BASE_URL}/furnitures?type=popular&page=${page}&limit=${limit}`,
@@ -34,7 +34,7 @@ async function fetchPopularFurniture({ page, limit }) {
   throw new Error('Жоден маршрут не повернув дані');
 }
 
-// ====== РЕНДЕР КАРТКИ ======
+
 function createFurnitureCard(f) {
   const li = document.createElement('li');
   li.className = 'furniture-card';
@@ -61,11 +61,6 @@ function createFurnitureCard(f) {
   return li;
 }
 
-// ====== МЕТРИКИ (точний крок сторінки) ======
-// cardW   — фактична ширина картки
-// gap     — фактичний gap із CSS
-// per     — скільки карток влазить зараз у вікно
-// pageW   — ширина «сторінки» = per*(cardW+gap) - gap
 function getMetrics() {
   const first = slider.querySelector('.furniture-card');
   const gap = parseFloat(getComputedStyle(slider).gap || '16') || 16;
@@ -86,7 +81,7 @@ function getMetrics() {
   return { cardW, gap, per, pageW };
 }
 
-// ====== ІНДИКАТОРИ ======
+
 function buildIndicators() {
   const total = (typeof totalItems === 'number' && totalItems > 0)
     ? totalItems
@@ -109,7 +104,7 @@ function updateDots() {
   dots.forEach((d, i) => d.classList.toggle('active', i === currentPage));
 }
 
-// ====== ЗАВАНТАЖЕННЯ ======
+
 async function loadPopularFirstPage() {
   isLoading = true;
   try {
@@ -147,7 +142,7 @@ async function loadMoreIfNeeded() {
   const noMore = (typeof totalItems === 'number') && (loadedCount >= totalItems);
   if (noMore) return;
 
-  // довантажуємо, коли майже в кінці
+
   const maxScroll = Math.max(0, scroller.scrollWidth - scroller.clientWidth);
   if (scroller.scrollLeft < (maxScroll - 10)) return;
 
@@ -166,7 +161,7 @@ async function loadMoreIfNeeded() {
   }
 }
 
-// ====== СКРОЛ/РЕСАЙЗ ======
+
 function bindScrollAndResize() {
   scroller.addEventListener('scroll', () => {
     const { pageW } = getMetrics();
@@ -180,7 +175,7 @@ function bindScrollAndResize() {
   });
 
   window.addEventListener('resize', () => {
-    // при зміні розміру перераховуємо індикатори/сторінки
+    
     buildIndicators();
     currentPage = Math.max(0, Math.min(pageCount - 1, currentPage));
     goToPage(currentPage, { smooth: false });
@@ -189,7 +184,7 @@ function bindScrollAndResize() {
   updateButtons();
 }
 
-// ====== НАВІГАЦІЯ ======
+
 function scrollSlider(direction) {
   const { pageW } = getMetrics();
   const maxScroll = Math.max(0, scroller.scrollWidth - scroller.clientWidth);
@@ -211,7 +206,85 @@ function updateButtons() {
   btnRight.disabled = currentPage >= pageCount - 1;
 }
 
-// ====== СВАЙП ======
+
+async function initFeedbackSlider() {
+  const container = document.querySelector('.js-feedback-cart');
+  if (!container) return;
+  try {
+    const response = await axios.get(
+      'https://furniture-store.b.goit.study/api/feedbacks?limit=10'
+    );
+    const reviews = response.data.feedbacks;
+    if (!reviews || reviews.length === 0) {
+      iziToast.error({
+        title: 'Error',
+        message: 'Щось пішло не так. Спробуйте пізніше.',
+        position: 'topRight',
+      });
+      return;
+    }
+    container.innerHTML = createMarkup(reviews);
+    const enableLoop = reviews.length > 3;
+
+    const totalBullets = 7; 
+    
+    const swiper = new Swiper('.feedback-slider', {
+     
+      modules: [Navigation, Pagination],
+      slidesPerGroup: 1,
+      slidesPerView: 1,
+      spaceBetween: 16,
+      loop: true, 
+      
+      pagination: {
+        el: '.swiper-pagination',
+        clickable: true,
+        renderBullet: function (index, className) {
+          if (index < totalBullets) {
+            return `<span class="${className}"></span>`;
+          }
+          return '';
+        },
+      }, 
+      navigation: {
+        nextEl: '.js-btn-forward',
+        prevEl: '.js-btn-back',
+      },
+     
+      breakpoints: {
+        768: {
+          slidesPerGroup: 1,
+          slidesPerView: 2,
+          spaceBetween: 24,
+        },
+        1440: {
+          slidesPerGroup: 1,
+          slidesPerView: 3,
+          spaceBetween: 24,
+        },
+      },
+    });
+
+    swiper.on('slideChange', () => {
+      const bullets = document.querySelectorAll('.swiper-pagination-bullet');
+      bullets.forEach(b =>
+        b.classList.remove('swiper-pagination-bullet-active')
+      );
+
+      const activeIndex = swiper.realIndex % totalBullets;
+      bullets[activeIndex].classList.add('swiper-pagination-bullet-active');
+    });
+  } catch (error) {
+    iziToast.error({
+      title: 'Error',
+      message: 'Щось пішло не так. Спробуйте пізніше.',
+      position: 'topRight',
+    });
+  }
+}
+
+
+
 function enableSwipe(container) {
   let startX = 0;
   container.addEventListener('touchstart', e => { startX = e.touches[0].clientX; });
@@ -222,7 +295,7 @@ function enableSwipe(container) {
   });
 }
 
-// ====== ПОДІЇ ======
+
 btnLeft.addEventListener('click', () => goToPage(currentPage - 1));
 btnRight.addEventListener('click', () => {
   goToPage(currentPage + 1);
@@ -230,5 +303,18 @@ btnRight.addEventListener('click', () => {
 });
 enableSwipe(scroller);
 
-// ====== СТАРТ ======
+
 loadPopularFirstPage();
+
+slider.addEventListener('click', e => {
+  const btn = e.target.closest('.details-btn');
+  if (!btn) return;
+
+  const id = btn.dataset.id;
+
+ 
+  const item = result?.furnitures?.find(f => f._id === id);
+  if (item) {
+    showModal(item); 
+  }
+});
