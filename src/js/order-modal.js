@@ -18,7 +18,8 @@ function closeOrderModal(event) {
 
 function openOrderModal(event) {
     if (orderModal) {
-        event.preventDefault();
+        const lastModal = document.getElementById('modal');
+        lastModal.classList.add('hidden');
         orderModal.classList.add('open-order');
         document.addEventListener('keydown', (event) => {
             if (event.key === 'Escape') {
@@ -74,7 +75,12 @@ orderForm.addEventListener('submit', async (event) => {
 
 const btnCloseOrder = document.querySelector('.order-modal-close');
 btnCloseOrder.addEventListener("click", closeOrderModal);
-const btnOpenOrder = document.querySelector('.btn-btn');
-btnOpenOrder.addEventListener("click", openOrderModal);
+
+document.addEventListener('click', (e) => {
+    if (e.target.matches('.modal-order-btn')) {
+        openOrderModal();
+    }
+});
+
 
 
