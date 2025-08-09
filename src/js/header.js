@@ -17,7 +17,7 @@ export function initHeaderNavigation() {
           const overlay = document.querySelector('.menu-overlay');
           const body = document.body;
           if (menu && overlay && body) {
-            menu.classList.remove('open');
+            menu.classList.remove('isOpen');
             overlay.classList.remove('visible');
             body.classList.remove('no-scroll');
           }
@@ -37,7 +37,7 @@ export function initHeaderNavigation() {
   
     const openMenu = () => {
       if (menu && overlay && body) {
-        menu.classList.add('open');
+        menu.classList.add('isOpen');
         overlay.classList.add('visible');
         body.classList.add('no-scroll');
       }
@@ -45,7 +45,7 @@ export function initHeaderNavigation() {
   
     const closeMenu = () => {
       if (menu && overlay && body) {
-        menu.classList.remove('open');
+        menu.classList.remove('isOpen');
         overlay.classList.remove('visible');
         body.classList.remove('no-scroll');
       }
@@ -84,6 +84,6 @@ import { initHeaderNavigation } from './header.js';
 document.addEventListener('DOMContentLoaded', () => {
   initHeaderNavigation();
 });
-
+*/
 
  
