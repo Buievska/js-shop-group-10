@@ -13,6 +13,21 @@ const limit = 8;
 let selectedCategory = '';
 let totalPages = 1;
 
+// --- Додаємо SVG-іконки у body ---
+(function addSvgIcons() {
+  const svgSprite = `
+    <svg xmlns="http://www.w3.org/2000/svg" style="display:none;">
+      <symbol id="icon-left-arrow" viewBox="0 0 32 32">
+        <path d="M16.943 23.057l-5.724-5.724h12.781v-2.667h-12.781l5.724-5.724-1.885-1.885-8.943 8.943 8.943 8.943 1.885-1.885z"></path>
+      </symbol>
+      <symbol id="icon-right-arrow" viewBox="0 0 32 32">
+        <path d="M15.057 23.057l1.885 1.885 8.943-8.943-8.943-8.943-1.885 1.885 5.724 5.724h-12.781v2.667h12.781l-5.724 5.724z"></path>
+      </symbol>
+    </svg>
+  `;
+  document.body.insertAdjacentHTML('afterbegin', svgSprite);
+})();
+
 // --- Отримати категорії ---
 async function getCategories() {
   const res = await fetch(`${BASE_URL}/categories`);
@@ -119,27 +134,24 @@ function createArrowButton(
   onClick = null
 ) {
   const btn = document.createElement('button');
-  btn.classList.add('pagination-arrow');
+  btn.classList.add('btn-circle');
   if (disabled) btn.disabled = true;
   if (!disabled && onClick) btn.addEventListener('click', onClick);
 
-  const svgNS = 'http://www.w3.org/2000/svg';
-  const svg = document.createElementNS(svgNS, 'svg');
-  svg.setAttribute('width', '14');
-  svg.setAttribute('height', '14');
-  svg.setAttribute('viewBox', '0 0 14 14');
-  const path = document.createElementNS(svgNS, 'path');
+  const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+  svg.setAttribute('width', '20');
+  svg.setAttribute('height', '20');
 
-  path.setAttribute(
-    'd',
-    direction === 'left'
-      ? 'M8.707 12.293L7.293 13.707L0.586 6.99997L7.293 0.292969L8.707 1.70697L4.414 5.99997H14V7.99997H4.414L8.707 12.293Z'
-      : 'M5.293 12.293L6.707 13.707L13.414 6.99997L6.707 0.292969L5.293 1.70697L9.586 5.99997H0V7.99997H9.586L5.293 12.293Z'
+  const use = document.createElementNS('http://www.w3.org/2000/svg', 'use');
+  use.setAttributeNS(
+    'http://www.w3.org/1999/xlink',
+    'href',
+    direction === 'left' ? '#icon-left-arrow' : '#icon-right-arrow'
   );
 
-  path.setAttribute('fill', disabled ? '#ccc' : 'currentColor');
-  svg.appendChild(path);
+  svg.appendChild(use);
   btn.appendChild(svg);
+
   return btn;
 }
 
