@@ -45,9 +45,8 @@ async function getFurnitures(page = 1, category = '') {
 }
 
 // --- Рендер категорій ---
-const basePath = location.pathname.startsWith('/js-shop-group-10')
-  ? '/js-shop-group-10'
-  : '';
+const basePath =
+  window.location.hostname === 'localhost' ? '' : '/js-shop-group-10';
 
 function renderCategories(categories) {
   const fallbackImg = `${basePath}/img/furniture-list/vsi-tovary.png`;
@@ -70,7 +69,7 @@ function renderCategories(categories) {
 
   const markup = categories
     .map(cat => {
-      let name = cat.name.replace(/^"|"$/g, '');
+      const name = cat.name.replace(/^"|"$/g, '');
       const imgFile = imageMap[name] || 'vsi-tovary.png';
       const imgPath = `${basePath}/img/furniture-list/${imgFile}`;
 
