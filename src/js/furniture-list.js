@@ -46,28 +46,28 @@ async function getFurnitures(page = 1, category = '') {
 
 // --- Рендер категорій ---
 function renderCategories(categories) {
-  const fallbackImg = './img/furniture-list/всі-товари.png';
+  const fallbackImg = './img/furniture-list/vsi-tovary.png';
 
   const imageMap = {
-    'Всі товари': 'всі-товари.png',
-    "М'які меблі": 'мякі-меблі.png',
-    'Шафи та системи зберігання': 'шафи.png',
-    'Ліжка та матраци': 'ліжка.png',
-    Столи: 'столи.png',
-    'Стільці та табурети': 'стільці.png',
-    Кухні: 'кухні.png',
-    'Меблі для дитячої': 'меблі-дитячі.png',
-    'Меблі для офісу': 'меблі-офіс.png',
-    'Меблі для передпокою': 'передпокій.png',
-    'Меблі для ванної кімнати': 'меблі-вана.png',
-    'Садові та вуличні меблі': 'меблі-садові.png',
-    'Декор та аксесуари': 'декор.png',
+    'Всі товари': 'vsi-tovary.png',
+    "М'які меблі": 'myaki-mebli.png',
+    'Шафи та системи зберігання': 'shafy-sistemy-zberigannya.png',
+    'Ліжка та матраци': 'lizka-matratsi.png',
+    Столи: 'stoly.png',
+    'Стільці та табурети': 'stiltsi-taburety.png',
+    Кухні: 'kuhni.png',
+    'Меблі для дитячої': 'mebli-dytyacha.png',
+    'Меблі для офісу': 'mebli-ofis.png',
+    'Меблі для передпокою': 'mebli-peredpokiy.png',
+    'Меблі для ванної кімнати': 'mebli-vanna.png',
+    'Садові та вуличні меблі': 'sadovi-mebli.png',
+    'Декор та аксесуари': 'dekor-aksesuary.png',
   };
 
   const markup = categories
     .map(cat => {
       let name = cat.name.replace(/^"|"$/g, '');
-      const imgFile = imageMap[name] || 'всі-товари.png';
+      const imgFile = imageMap[name] || 'vsi-tovary.png';
       const imgPath = `./img/furniture-list/${imgFile}`;
 
       return `
@@ -139,8 +139,8 @@ function createArrowButton(
   if (!disabled && onClick) btn.addEventListener('click', onClick);
 
   const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-  svg.setAttribute('width', '20');
-  svg.setAttribute('height', '20');
+  svg.setAttribute('width', '25');
+  svg.setAttribute('height', '25');
 
   const use = document.createElementNS('http://www.w3.org/2000/svg', 'use');
   use.setAttributeNS(
