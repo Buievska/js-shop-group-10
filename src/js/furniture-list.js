@@ -113,15 +113,6 @@ function createPageButton(text, { active = false, onClick = null } = {}) {
   return btn;
 }
 
-function createPageButton(text, { active = false, onClick = null } = {}) {
-  const btn = document.createElement('button');
-  btn.textContent = text;
-  btn.classList.add('page-btn');
-  if (active) btn.classList.add('active');
-  if (onClick) btn.addEventListener('click', onClick);
-  return btn;
-}
-
 function createArrowButton(
   direction,
   { disabled = false } = {},
@@ -132,23 +123,23 @@ function createArrowButton(
   if (disabled) btn.disabled = true;
   if (!disabled && onClick) btn.addEventListener('click', onClick);
 
-  // створюємо svg з use
   const svgNS = 'http://www.w3.org/2000/svg';
   const svg = document.createElementNS(svgNS, 'svg');
-  svg.setAttribute('class', 'icon-feedback');
-  svg.setAttribute('width', '25');
-  svg.setAttribute('height', '25');
+  svg.setAttribute('width', '14');
+  svg.setAttribute('height', '14');
+  svg.setAttribute('viewBox', '0 0 14 14');
+  const path = document.createElementNS(svgNS, 'path');
 
-  const use = document.createElementNS(svgNS, 'use');
-  use.setAttributeNS(
-    'http://www.w3.org/1999/xlink',
-    'href',
-    `./img/sprite.svg#icon-${direction}-arrow`
+  path.setAttribute(
+    'd',
+    direction === 'left'
+      ? 'M8.707 12.293L7.293 13.707L0.586 6.99997L7.293 0.292969L8.707 1.70697L4.414 5.99997H14V7.99997H4.414L8.707 12.293Z'
+      : 'M5.293 12.293L6.707 13.707L13.414 6.99997L6.707 0.292969L5.293 1.70697L9.586 5.99997H0V7.99997H9.586L5.293 12.293Z'
   );
 
-  svg.appendChild(use);
+  path.setAttribute('fill', disabled ? '#ccc' : 'currentColor');
+  svg.appendChild(path);
   btn.appendChild(svg);
-
   return btn;
 }
 
