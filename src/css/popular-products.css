@@ -220,10 +220,10 @@ background: #6b0609;
   }
 }
 .popular-section {
-  padding: 40px 16px;
   width: 100%;
 }
 .container-popular {
+  padding: 40px 16px;
   display: block;
   margin: 0 auto;
   max-width: 1318px;
@@ -253,7 +253,7 @@ background: #6b0609;
   flex-wrap: nowrap !important;
 }
 .furniture-card.swiper-slide {
-  width: var(--card-w);
+  /* width: var(--card-w); */
   height: auto;
   display: flex;
   flex-direction: column;
@@ -388,7 +388,7 @@ background: #6b0609;
 .slider-btn:focus-visible:not(:disabled) {
   transform: scale(1.05);
   background: #975052;
-  border-color: 1px solid rgba(8, 12, 9, 0.15);
+  border: 1px solid rgba(8, 12, 9, 0.15); 
   outline: none;
   fill: #fff;
 }
@@ -426,3 +426,12 @@ background: #6b0609;
     margin-bottom: 32px;
   }
 }
+#popular-slider.swiper-wrapper {
+  display: flex !important;
+  flex-wrap: nowrap !important;   
+  gap: 0 !important;              
+}
+#popular-slider .swiper-slide {
+  flex-shrink: 0 !important;
+}
+
