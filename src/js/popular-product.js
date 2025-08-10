@@ -19,7 +19,7 @@ let swiperInstance = null;
 
 
 const BASE_URL = 'https://furniture-store.b.goit.study/api';
-const LIMIT = 8;
+const LIMIT = 4;
 let page = 1;
 let totalItems = null;
 let isLoading = false;
