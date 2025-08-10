@@ -142,7 +142,7 @@ async function initPopularSlider() {
     
     swiperInstance = new Swiper(sliderContainer, {
       modules: [Navigation, Pagination],
-      slidesPerView: 'auto',
+      slidesPerView: 1,
       spaceBetween: 16,
       loop: false,
       breakpoints: {
@@ -173,6 +173,8 @@ async function initPopularSlider() {
           }
         },
       },
+
+      
     });
 
     swiperInstance.pagination.update();
