@@ -19,7 +19,7 @@ let swiperInstance = null;
 
 
 const BASE_URL = 'https://furniture-store.b.goit.study/api';
-const LIMIT = 4;
+const LIMIT = 8;
 let page = 1;
 let totalItems = null;
 let isLoading = false;
@@ -212,16 +212,7 @@ sliderList.addEventListener('click', async (e) => {
   }
 });
 
-swiperInstance = new Swiper(sliderContainer, {
-  modules: [Navigation, Pagination],
-  slidesPerView: 'auto',
-  spaceBetween: 16,
-  loop: false,
-  breakpoints: {
-    768:  { slidesPerView: 'auto', spaceBetween: 20 },
-    1440: { slidesPerView: 'auto', spaceBetween: 24 },
-  },
-});
+
 
 initPopularSlider();
 

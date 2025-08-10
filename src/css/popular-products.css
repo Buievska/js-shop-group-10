@@ -249,7 +249,7 @@ background: #6b0609;
   margin: 0;
 }
 .furniture-card.swiper-slide {
-  width: var(--card-w);
+  /* width: var(--card-w); */
   height: auto;
   display: flex;
   flex-direction: column;
@@ -422,32 +422,11 @@ background: #6b0609;
     margin-bottom: 32px;
   }
 }
-/* 
-#popular-slider-container.swiper {
-  overflow: hidden !important;
-}
-
 #popular-slider.swiper-wrapper {
   display: flex !important;
-  gap: 0 !important;               
-  transform: translate3d(0,0,0) !important;
-  will-change: transform;
-  padding: 0 !important;
-  margin: 0 !important;
-  list-style: none !important;
+  flex-wrap: nowrap !important;   
+  gap: 0 !important;              
 }
-
 #popular-slider .swiper-slide {
   flex-shrink: 0 !important;
-  width: auto !important;         
 }
-
-.furniture-card.swiper-slide {
-  width: var(--card-w) !important;
-}
-
-.popular-slider { gap: 0 !important; } */
-
-/* .furniture-card.swiper-slide {
-  width: var(--card-w);
-} */
