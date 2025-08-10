@@ -1,0 +1,228 @@
+.header-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: row;
+    height: 69px;
+}
+
+.burger-btn {
+    padding-top: 16px;
+    padding-bottom: 16px;
+    border: none;
+    fill: #2f2f37;
+    background-color: transparent;
+}
+
+.menu-nav-list,
+.shop-btn {
+    display: none;
+}
+
+.menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #fff;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 250ms cubic-bezier(0.4, 0, 0.2, 1),
+        visibility 250ms cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 1000;
+}
+
+.menu.is-open {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+
+.mobil-menu-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 17px 20px;
+    border-bottom: 1px solid rgba(8, 12, 9, 0.1);
+}
+
+.close-btn {
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: transparent;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+}
+
+body.no-scroll {
+    overflow: hidden;
+}
+
+nav a:hover,
+.burger-btn:hover,
+.close-btn:hover,
+.shop-btn:hover,
+.menu-shop-btn:hover {
+    cursor: pointer;
+    opacity: 0.5;
+}
+
+nav a:focus,
+.burger-btn:focus,
+.close-btn:focus,
+.menu-shop-btn:focus {
+    opacity: 0.5;
+}
+
+.mobil-menu-nav {
+    padding: 24px 32px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.mobil-menu-nav-list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 32px;
+}
+
+.mobil-menu-nav-item {
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 1.6;
+    color: #080C09;
+    text-align: center;
+}
+
+.menu-shop-btn {
+    display: none;
+}
+
+.burger-btn .burger-icon-close {
+    display: none;
+}
+
+.header.menu-is-open .burger-btn .burger-icon-open {
+    display: none;
+}
+
+.header.menu-is-open .burger-btn .burger-icon-close {
+    display: block;
+}
+
+@media screen and (min-width: 768px) {
+    .menu {
+        left: auto;
+        height: auto;
+        display: flex;
+        flex-direction: column;
+        top: 68px;
+        right: calc((100vw - 768px) / 2 + 30px);
+        width: 249px;
+        background-color: #fff;
+    }
+
+    .mobil-menu-container {
+        display: none;
+    }
+
+    .mobil-menu-nav {
+        padding: 24px;
+        width: 100%;
+    }
+
+    .mobil-menu-nav-list,
+    .mobil-menu-nav {
+        align-items: flex-end;
+    }
+
+    .mobil-menu-nav-list {
+        align-items: flex-end;
+        width: 100%;
+        gap: 24px;
+        margin-bottom: 0;
+    }
+
+    .mobil-menu-nav-item a {
+        font-weight: 500;
+        font-size: 16px;
+    }
+
+    .mobil-menu-nav-item {
+        text-align: right;
+    }
+
+    .menu-shop-btn {
+        display: none;
+    }
+}
+
+@media screen and (min-width: 1440px) {
+
+    .burger-btn,
+    .menu {
+        display: none;
+    }
+
+    .menu-nav-list,
+    .shop-btn {
+        display: flex;
+    }
+
+    .menu-nav-link {
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 1.6;
+        color: #080C09;
+    }
+
+    .header-nav {
+        display: flex;
+        align-items: center;
+        justify-items: center;
+        flex-direction: row;
+    }
+
+    .header-logo {
+        margin-right: 462px;
+    }
+
+    .menu-nav-list {
+        display: flex;
+        align-items: flex-end;
+        justify-content: flex-start;
+        flex-direction: row;
+        gap: 32px;
+        margin-right: 32px;
+    }
+
+    .shop-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: row;
+        gap: 8px;
+        border-radius: 100px;
+        padding: 8px 20px;
+        width: 129px;
+        height: 42px;
+        box-shadow: 0 1px 2px 0 rgba(8, 12, 9, 0.05),
+            inset 0 -2px 1px 0 rgba(0, 0, 0, 0.2),
+            inset 0 0 0 1px rgba(8, 12, 9, 0.15),
+            inset 0 2px 1px 0 rgba(255, 255, 255, 0.25),
+            inset 0 32px 24px 0 rgba(255, 255, 255, 0.05);
+        background-color: #6B0609;
+        font-weight: 500;
+        font-size: 16px;
+        line-height: 1.6;
+        color: #fff;
+    } 
+}
