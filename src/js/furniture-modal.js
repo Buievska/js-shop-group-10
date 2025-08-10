@@ -2,30 +2,13 @@ const modal = document.getElementById('modal');
 const modalBody = document.getElementById('modal-body');
 const modalClose = document.getElementById('modal-close');
 const list = document.querySelector('.furniture-list');
-let result;
-
-const fetchProducts = () => {
-  fetch('https://furniture-store.b.goit.study/api/furnitures?page=1&limit=10')
-    .then(response => {
-      if (!response.ok) {
-        throw new Error('Error');
-      }
-
-      return response.json();
-    })
-    .then(data => {
-      result = data;
-    })
-    .catch(error => {
-      console.error('Error while fetching furnitures', error);
-    });
-};
-fetchProducts();
 
 document.querySelector('.furniture-list').addEventListener('click', e => {
   if (e.target.matches('.details-btn')) {
     const id = e.target.dataset.id;
-    const item = result?.furnitures?.find(f => f._id === id);
+    const furnituresString = list.getAttribute('data-items');
+    const furnitures = JSON.parse(furnituresString);
+    const item = furnitures?.find(f => f._id === id);
     if (item) showModal(item);
   }
 });
