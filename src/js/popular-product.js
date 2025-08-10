@@ -1,5 +1,3 @@
-
-
 import Swiper from 'swiper';
 import { Navigation, Pagination } from 'swiper/modules';
 import 'swiper/css';
@@ -8,22 +6,22 @@ import 'swiper/css/pagination';
 import iziToast from 'izitoast';
 import 'izitoast/dist/css/iziToast.min.css';
 
-
 const sliderContainer = document.getElementById('popular-slider-container');
 const sliderList = document.getElementById('popular-slider');
 const btnLeft = document.getElementById('btn-left');
 const btnRight = document.getElementById('btn-right');
 const indicators = document.getElementById('slider-indicators');
 
-let swiperInstance = null;
+// зняти можливі “чужі” стилі (grid/wrap), якщо клас є
+if (sliderList) sliderList.classList.remove('furniture-list');
 
+let swiperInstance = null;
 
 const BASE_URL = 'https://furniture-store.b.goit.study/api';
 const LIMIT = 8;
 let page = 1;
 let totalItems = null;
 let isLoading = false;
-
 
 const cacheById = new Map();
 
@@ -39,7 +37,6 @@ async function fetchPopularFurniture({ page, limit }) {
   }
   throw new Error('Не вдалося отримати дані з API');
 }
-
 
 async function fetchFurnitureById(id) {
   id = String(id);
@@ -61,7 +58,6 @@ async function fetchFurnitureById(id) {
   return null;
 }
 
-
 function createFurnitureCardsMarkup(furnitures) {
   return furnitures
     .map(f => {
@@ -80,9 +76,7 @@ function createFurnitureCardsMarkup(furnitures) {
         <div class="card-content">
           <h3 class="card-title">${f.name || 'Без назви'}</h3>
           <div class="color-list">${dots}</div>
-          <p class="card-price">${
-            typeof f.price === 'number' ? f.price + ' грн' : '—'
-          }</p>
+          <p class="card-price">${typeof f.price === 'number' ? f.price + ' грн' : '—'}</p>
           <button class="details-btn" data-id="${f._id}">Детальніше</button>
         </div>
       </li>`;
@@ -90,11 +84,9 @@ function createFurnitureCardsMarkup(furnitures) {
     .join('');
 }
 
-
 async function loadMoreIfNeeded() {
   const loadedCount = sliderList.children.length;
-  const noMoreItems =
-    typeof totalItems === 'number' && loadedCount >= totalItems;
+  const noMoreItems = typeof totalItems === 'number' && loadedCount >= totalItems;
   if (isLoading || noMoreItems) return;
 
   isLoading = true;
@@ -103,9 +95,7 @@ async function loadMoreIfNeeded() {
     const data = await fetchPopularFurniture({ page, limit: LIMIT });
     const newFurnitures = data.furnitures || [];
     if (newFurnitures.length > 0) {
-      
       newFurnitures.forEach(f => cacheById.set(String(f._id), f));
-
       const newSlidesMarkup = createFurnitureCardsMarkup(newFurnitures);
       sliderList.insertAdjacentHTML('beforeend', newSlidesMarkup);
       swiperInstance.update();
@@ -133,20 +123,21 @@ async function initPopularSlider() {
       return;
     }
 
-    
     furnitures.forEach(f => cacheById.set(String(f._id), f));
-
-   
     sliderList.innerHTML = createFurnitureCardsMarkup(furnitures);
 
-    
+    const debounce = (fn, ms = 120) => {
+      let t;
+      return (...args) => { clearTimeout(t); t = setTimeout(() => fn(...args), ms); };
+    };
+
     swiperInstance = new Swiper(sliderContainer, {
       modules: [Navigation, Pagination],
       slidesPerView: 1,
       spaceBetween: 16,
       loop: false,
       breakpoints: {
-        768: { slidesPerView: 2, spaceBetween: 20 },
+        768:  { slidesPerView: 2, spaceBetween: 20 },
         1440: { slidesPerView: 4, spaceBetween: 24 },
       },
       navigation: {
@@ -161,21 +152,39 @@ async function initPopularSlider() {
         renderBullet: (index, className) =>
           index < TOTAL_BULLETS ? `<span class="${className}"></span>` : '',
       },
+
+      // підстраховки для ресайзу/DOM-змін
+      observer: true,
+      observeParents: true,
+      observeSlideChildren: true,
+      updateOnWindowResize: true,
+      roundLengths: true,
+      watchOverflow: true,
+
       on: {
+        resize() { this.update(); },
+        beforeResize() { this.updateSize(); },
         reachEnd: async () => await loadMoreIfNeeded(),
         slideChange: function () {
           const bullets = indicators.querySelectorAll('.popular-bullet');
-          if (bullets.length === 0) return;
+          if (!bullets.length) return;
           bullets.forEach(b => b.classList.remove('popular-bullet-active'));
           const activeIndex = this.realIndex % TOTAL_BULLETS;
-          if (bullets[activeIndex]) {
-            bullets[activeIndex].classList.add('popular-bullet-active');
-          }
+          bullets[activeIndex]?.classList.add('popular-bullet-active');
         },
       },
-
-      
     });
+
+    // дати верстці “осісти”, потім оновити
+    requestAnimationFrame(() => swiperInstance?.update());
+
+    // глобальний ресайз із дебаунсом
+    window.addEventListener('resize', debounce(() => {
+      if (!swiperInstance) return;
+      swiperInstance.updateSize();
+      swiperInstance.updateSlides();
+      swiperInstance.update();
+    }, 120));
 
     swiperInstance.pagination.update();
     swiperInstance.emit('slideChange');
@@ -190,7 +199,6 @@ async function initPopularSlider() {
     isLoading = false;
   }
 }
-
 
 sliderList.addEventListener('click', async (e) => {
   const btn = e.target.closest('.details-btn');
@@ -214,10 +222,7 @@ sliderList.addEventListener('click', async (e) => {
   }
 });
 
-
-
 initPopularSlider();
-
 
 
 
