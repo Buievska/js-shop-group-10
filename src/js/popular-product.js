@@ -212,6 +212,16 @@ sliderList.addEventListener('click', async (e) => {
   }
 });
 
+swiperInstance = new Swiper(sliderContainer, {
+  modules: [Navigation, Pagination],
+  slidesPerView: 'auto',
+  spaceBetween: 16,
+  loop: false,
+  breakpoints: {
+    768:  { slidesPerView: 'auto', spaceBetween: 20 },
+    1440: { slidesPerView: 'auto', spaceBetween: 24 },
+  },
+});
 
 initPopularSlider();
 
