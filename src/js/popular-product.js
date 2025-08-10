@@ -1,159 +1,115 @@
 
-const slider     = document.getElementById('popular-slider');            
-const scroller   = document.querySelector('.popular-slider-wrapper');    
-const btnLeft    = document.getElementById('btn-left');
-const btnRight   = document.getElementById('btn-right');
+
+import Swiper from 'swiper';
+import { Navigation, Pagination } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+import iziToast from 'izitoast';
+import 'izitoast/dist/css/iziToast.min.css';
+
+
+const sliderContainer = document.getElementById('popular-slider-container');
+const sliderList = document.getElementById('popular-slider');
+const btnLeft = document.getElementById('btn-left');
+const btnRight = document.getElementById('btn-right');
 const indicators = document.getElementById('slider-indicators');
 
+let swiperInstance = null;
 
-const BASE_URL   = 'https://furniture-store.b.goit.study/api';
-const LIMIT      = 4;     
-let page         = 1;     
-let totalItems   = null;  
-let isLoading    = false;
 
-let pageCount    = 0;     
-let currentPage  = 0;    
+const BASE_URL = 'https://furniture-store.b.goit.study/api';
+const LIMIT = 8;
+let page = 1;
+let totalItems = null;
+let isLoading = false;
 
+
+const cacheById = new Map();
 
 async function fetchPopularFurniture({ page, limit }) {
-  const candidates = [
-    `${BASE_URL}/furnitures?type=popular&page=${page}&limit=${limit}`,
-    `${BASE_URL}/furniture?type=popular&page=${page}&limit=${limit}`,
-    `${BASE_URL}/furnitures?sortName=rate&sortDirect=desc&page=${page}&limit=${limit}`,
-    `${BASE_URL}/furniture?sortName=rate&sortDirect=desc&page=${page}&limit=${limit}`,
-  ];
-  for (const url of candidates) {
-    try {
-      const res = await fetch(url, { headers: { Accept: 'application/json' } });
-      if (!res.ok) continue;
-      const data = await res.json();
-      if (Array.isArray(data?.furnitures)) return data;
-    } catch (_) {}
-  }
-  throw new Error('Жоден маршрут не повернув дані');
-}
-
-
-function createFurnitureCard(f) {
-  const li = document.createElement('li');
-  li.className = 'furniture-card';
-
-  const imageUrl = f.images?.[0] || 'https://via.placeholder.com/300x200?text=No+Image';
-  const colors = Array.isArray(f.color) ? f.color.slice(0, 3) : [];
-
-  const dots = Array.from({ length: 3 }, (_, i) => {
-    const c = colors[i];
-    return c
-      ? `<span class="color-dot" style="background:${c}"></span>`
-      : `<span class="color-dot placeholder" aria-hidden="true"></span>`;
-  }).join('');
-
-  li.innerHTML = `
-    <img src="${imageUrl}" alt="${f.name || 'Товар'}" class="card-img" />
-    <div class="card-content">
-      <h3 class="card-title">${f.name || 'Без назви'}</h3>
-      <div class="color-list">${dots}</div>
-      <p class="card-price">${typeof f.price === 'number' ? f.price + ' грн' : '—'}</p>
-      <button class="details-btn" data-id="${f._id}">Детальніше</button>
-    </div>
-  `;
-  return li;
-}
-
-function getMetrics() {
-  const first = slider.querySelector('.furniture-card');
-  const gap = parseFloat(getComputedStyle(slider).gap || '16') || 16;
-
-  if (!first) {
-    return {
-      cardW: 0,
-      gap,
-      per: 1,
-      pageW: scroller.clientWidth || 0
-    };
-  }
-
-  const cardW = first.getBoundingClientRect().width;
-  const per   = Math.max(1, Math.floor((scroller.clientWidth + gap) / (cardW + gap)));
-  const pageW = per * (cardW + gap) - gap;
-
-  return { cardW, gap, per, pageW };
-}
-
-
-function buildIndicators() {
-  const total = (typeof totalItems === 'number' && totalItems > 0)
-    ? totalItems
-    : slider.children.length;
-
-  const { per } = getMetrics();
-  pageCount = Math.max(1, Math.ceil(total / per));
-
-  indicators.innerHTML = '';
-  for (let i = 0; i < pageCount; i++) {
-    const dot = document.createElement('span');
-    dot.className = 'page-dot' + (i === currentPage ? ' active' : '');
-    dot.addEventListener('click', () => goToPage(i));
-    indicators.appendChild(dot);
-  }
-}
-
-function updateDots() {
-  const dots = indicators.querySelectorAll('.page-dot');
-  dots.forEach((d, i) => d.classList.toggle('active', i === currentPage));
-}
-
-
-async function loadPopularFirstPage() {
-  isLoading = true;
+  const url = `${BASE_URL}/furnitures?type=popular&page=${page}&limit=${limit}`;
   try {
-    const data = await fetchPopularFurniture({ page, limit: LIMIT });
-    const { furnitures, totalItems: total } = data;
-    totalItems = typeof total === 'number' ? total : furnitures.length;
-
-    if (!furnitures || furnitures.length === 0) {
-      slider.innerHTML = '<li>Немає популярних товарів.</li>';
-      btnLeft.disabled = true;
-      btnRight.disabled = true;
-      return;
-    }
-
-    furnitures.forEach(f => slider.appendChild(createFurnitureCard(f)));
-
-    bindScrollAndResize();
-    currentPage = 0;
-    buildIndicators();
-    goToPage(0, { smooth: false });
-  } catch (e) {
-    console.error('Помилка завантаження:', e);
-    slider.innerHTML = '<li>Не вдалося завантажити популярні товари.</li>';
-    btnLeft.disabled = true;
-    btnRight.disabled = true;
-  } finally {
-    isLoading = false;
+    const res = await fetch(url, { headers: { Accept: 'application/json' } });
+    if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+    const data = await res.json();
+    if (Array.isArray(data?.furnitures)) return data;
+  } catch (error) {
+    console.error('Fetch error:', error);
   }
+  throw new Error('Не вдалося отримати дані з API');
 }
+
+
+async function fetchFurnitureById(id) {
+  id = String(id);
+  const urls = [
+    `${BASE_URL}/furnitures/${id}`,
+    `${BASE_URL}/furniture/${id}`,
+    `${BASE_URL}/furnitures?id=${id}`,
+    `${BASE_URL}/furniture?id=${id}`,
+  ];
+  for (const u of urls) {
+    try {
+      const r = await fetch(u, { headers: { Accept: 'application/json' } });
+      if (!r.ok) continue;
+      const j = await r.json();
+      const item = j?.furniture || j?.furnitures?.[0] || (j?._id && j);
+      if (item) return item;
+    } catch {}
+  }
+  return null;
+}
+
+
+function createFurnitureCardsMarkup(furnitures) {
+  return furnitures
+    .map(f => {
+      const imageUrl =
+        f.images?.[0] || 'https://via.placeholder.com/300x200?text=No+Image';
+      const colors = Array.isArray(f.color) ? f.color.slice(0, 3) : [];
+      const dots = Array.from({ length: 3 }, (_, i) => {
+        const c = colors[i];
+        return c
+          ? `<span class="color-dot" style="background:${c}"></span>`
+          : `<span class="color-dot placeholder"></span>`;
+      }).join('');
+      return `
+      <li class="furniture-card swiper-slide">
+        <img src="${imageUrl}" alt="${f.name || 'Товар'}" class="card-img" />
+        <div class="card-content">
+          <h3 class="card-title">${f.name || 'Без назви'}</h3>
+          <div class="color-list">${dots}</div>
+          <p class="card-price">${
+            typeof f.price === 'number' ? f.price + ' грн' : '—'
+          }</p>
+          <button class="details-btn" data-id="${f._id}">Детальніше</button>
+        </div>
+      </li>`;
+    })
+    .join('');
+}
+
 
 async function loadMoreIfNeeded() {
-  if (isLoading) return;
-
-  const loadedCount = slider.children.length;
-  const noMore = (typeof totalItems === 'number') && (loadedCount >= totalItems);
-  if (noMore) return;
-
-
-  const maxScroll = Math.max(0, scroller.scrollWidth - scroller.clientWidth);
-  if (scroller.scrollLeft < (maxScroll - 10)) return;
+  const loadedCount = sliderList.children.length;
+  const noMoreItems =
+    typeof totalItems === 'number' && loadedCount >= totalItems;
+  if (isLoading || noMoreItems) return;
 
   isLoading = true;
   try {
     page += 1;
     const data = await fetchPopularFurniture({ page, limit: LIMIT });
-    (data.furnitures || []).forEach(f => slider.appendChild(createFurnitureCard(f)));
+    const newFurnitures = data.furnitures || [];
+    if (newFurnitures.length > 0) {
+      
+      newFurnitures.forEach(f => cacheById.set(String(f._id), f));
 
-    buildIndicators();
-    updateDots();
+      const newSlidesMarkup = createFurnitureCardsMarkup(newFurnitures);
+      sliderList.insertAdjacentHTML('beforeend', newSlidesMarkup);
+      swiperInstance.update();
+    }
   } catch (e) {
     console.warn('Не вдалось довантажити наступну сторінку:', e.message);
   } finally {
@@ -161,160 +117,100 @@ async function loadMoreIfNeeded() {
   }
 }
 
+async function initPopularSlider() {
+  if (!sliderContainer) return;
 
-function bindScrollAndResize() {
-  scroller.addEventListener('scroll', () => {
-    const { pageW } = getMetrics();
-    const pageByScroll = pageW > 0 ? Math.round(scroller.scrollLeft / pageW) : 0;
-    if (pageByScroll !== currentPage) {
-      currentPage = Math.max(0, Math.min(pageCount - 1, pageByScroll));
-      updateDots();
-      updateButtons();
-    }
-    loadMoreIfNeeded();
-  });
+  const TOTAL_BULLETS = 7;
+  isLoading = true;
 
-  window.addEventListener('resize', () => {
-    
-    buildIndicators();
-    currentPage = Math.max(0, Math.min(pageCount - 1, currentPage));
-    goToPage(currentPage, { smooth: false });
-  });
-
-  updateButtons();
-}
-
-
-function scrollSlider(direction) {
-  const { pageW } = getMetrics();
-  const maxScroll = Math.max(0, scroller.scrollWidth - scroller.clientWidth);
-  const target = Math.max(0, Math.min(maxScroll, scroller.scrollLeft + direction * pageW));
-  scroller.scrollTo({ left: target, behavior: 'smooth' });
-}
-
-function goToPage(p, opts = { smooth: true }) {
-  currentPage = Math.max(0, Math.min(pageCount - 1, p));
-  const { pageW } = getMetrics();
-  const left = currentPage * pageW;
-  scroller.scrollTo({ left, behavior: opts.smooth ? 'smooth' : 'auto' });
-  updateButtons();
-  updateDots();
-}
-
-function updateButtons() {
-  btnLeft.disabled  = currentPage <= 0;
-  btnRight.disabled = currentPage >= pageCount - 1;
-}
-
-
-async function initFeedbackSlider() {
-  const container = document.querySelector('.js-feedback-cart');
-  if (!container) return;
   try {
-    const response = await axios.get(
-      'https://furniture-store.b.goit.study/api/feedbacks?limit=10'
-    );
-    const reviews = response.data.feedbacks;
-    if (!reviews || reviews.length === 0) {
-      iziToast.error({
-        title: 'Error',
-        message: 'Щось пішло не так. Спробуйте пізніше.',
-        position: 'topRight',
-      });
+    const data = await fetchPopularFurniture({ page, limit: LIMIT });
+    const { furnitures, totalItems: total } = data;
+    totalItems = typeof total === 'number' ? total : furnitures.length;
+
+    if (!furnitures || furnitures.length === 0) {
+      sliderList.innerHTML = '<li class="swiper-slide">Популярні товари відсутні.</li>';
       return;
     }
-    container.innerHTML = createMarkup(reviews);
-    const enableLoop = reviews.length > 3;
 
-    const totalBullets = 7; 
     
-    const swiper = new Swiper('.feedback-slider', {
-     
+    furnitures.forEach(f => cacheById.set(String(f._id), f));
+
+   
+    sliderList.innerHTML = createFurnitureCardsMarkup(furnitures);
+
+    
+    swiperInstance = new Swiper(sliderContainer, {
       modules: [Navigation, Pagination],
-      slidesPerGroup: 1,
-      slidesPerView: 1,
+      slidesPerView: 'auto',
       spaceBetween: 16,
-      loop: true, 
-      
-      pagination: {
-        el: '.swiper-pagination',
-        clickable: true,
-        renderBullet: function (index, className) {
-          if (index < totalBullets) {
-            return `<span class="${className}"></span>`;
-          }
-          return '';
-        },
-      }, 
-      navigation: {
-        nextEl: '.js-btn-forward',
-        prevEl: '.js-btn-back',
-      },
-     
+      loop: false,
       breakpoints: {
-        768: {
-          slidesPerGroup: 1,
-          slidesPerView: 2,
-          spaceBetween: 24,
-        },
-        1440: {
-          slidesPerGroup: 1,
-          slidesPerView: 3,
-          spaceBetween: 24,
+        768: { slidesPerView: 2, spaceBetween: 20 },
+        1440: { slidesPerView: 4, spaceBetween: 24 },
+      },
+      navigation: {
+        nextEl: btnRight,
+        prevEl: btnLeft,
+      },
+      pagination: {
+        el: indicators,
+        clickable: true,
+        bulletClass: 'popular-bullet',
+        bulletActiveClass: 'popular-bullet-active',
+        renderBullet: (index, className) =>
+          index < TOTAL_BULLETS ? `<span class="${className}"></span>` : '',
+      },
+      on: {
+        reachEnd: async () => await loadMoreIfNeeded(),
+        slideChange: function () {
+          const bullets = indicators.querySelectorAll('.popular-bullet');
+          if (bullets.length === 0) return;
+          bullets.forEach(b => b.classList.remove('popular-bullet-active'));
+          const activeIndex = this.realIndex % TOTAL_BULLETS;
+          if (bullets[activeIndex]) {
+            bullets[activeIndex].classList.add('popular-bullet-active');
+          }
         },
       },
     });
 
-    swiper.on('slideChange', () => {
-      const bullets = document.querySelectorAll('.swiper-pagination-bullet');
-      bullets.forEach(b =>
-        b.classList.remove('swiper-pagination-bullet-active')
-      );
-
-      const activeIndex = swiper.realIndex % totalBullets;
-      bullets[activeIndex].classList.add('swiper-pagination-bullet-active');
-    });
+    swiperInstance.pagination.update();
+    swiperInstance.emit('slideChange');
   } catch (error) {
+    console.error('Помилка ініціалізації слайдера:', error);
     iziToast.error({
-      title: 'Error',
-      message: 'Щось пішло не так. Спробуйте пізніше.',
+      title: 'Помилка',
+      message: 'Не вдалося завантажити товари.',
       position: 'topRight',
     });
+  } finally {
+    isLoading = false;
   }
 }
 
 
-
-function enableSwipe(container) {
-  let startX = 0;
-  container.addEventListener('touchstart', e => { startX = e.touches[0].clientX; });
-  container.addEventListener('touchend', e => {
-    const delta = e.changedTouches[0].clientX - startX;
-    if (delta > 50) goToPage(currentPage - 1);
-    if (delta < -50) goToPage(currentPage + 1);
-  });
-}
-
-
-btnLeft.addEventListener('click', () => goToPage(currentPage - 1));
-btnRight.addEventListener('click', () => {
-  goToPage(currentPage + 1);
-  setTimeout(loadMoreIfNeeded, 350);
-});
-enableSwipe(scroller);
-
-
-loadPopularFirstPage();
-
-slider.addEventListener('click', e => {
+sliderList.addEventListener('click', async (e) => {
   const btn = e.target.closest('.details-btn');
   if (!btn) return;
 
-  const id = btn.dataset.id;
+  const id = String(btn.dataset.id);
+  let item = cacheById.get(id);
 
- 
-  const item = result?.furnitures?.find(f => f._id === id);
-  if (item) {
-    showModal(item); 
+  if (!item) {
+    item = await fetchFurnitureById(id);
+  }
+
+  if (item && typeof window.showModal === 'function') {
+    window.showModal(item);
+  } else {
+    iziToast.error({
+      title: 'Помилка',
+      message: 'Товар не знайдено або showModal недоступний.',
+      position: 'topRight',
+    });
   }
 });
+
+
+initPopularSlider();
