@@ -214,3 +214,9 @@ sliderList.addEventListener('click', async (e) => {
 
 
 initPopularSlider();
+
+
+
+
+
+
