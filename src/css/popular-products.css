@@ -248,6 +248,10 @@ background: #6b0609;
   padding: 0;
   margin: 0;
 }
+
+#popular-slider {
+  flex-wrap: nowrap !important;
+}
 .furniture-card.swiper-slide {
   width: var(--card-w);
   height: auto;
