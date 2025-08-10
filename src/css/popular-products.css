@@ -220,10 +220,10 @@ background: #6b0609;
   }
 }
 .popular-section {
-  /* padding: 40px 16px; */
   width: 100%;
 }
 .container-popular {
+  padding: 40px 16px;
   display: block;
   margin: 0 auto;
   max-width: 1318px;
