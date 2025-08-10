@@ -27,7 +27,7 @@
     <script type="module" crossorigin src="/js-shop-group-10/index.js"></script>
     <link rel="modulepreload" crossorigin href="/js-shop-group-10/assets/vendor-gtGqnvfC.js">
     <link rel="stylesheet" crossorigin href="/js-shop-group-10/assets/vendor-lHm0X9zG.css">
-    <link rel="stylesheet" crossorigin href="/js-shop-group-10/assets/index-Cw00iGhF.css">
+    <link rel="stylesheet" crossorigin href="/js-shop-group-10/assets/index--aKCL0Ok.css">
   </head>
 
   <body>
@@ -40,13 +40,15 @@
           <use href="/js-shop-group-10/assets/sprite-DdT4mbFA.svg#icon-logo-furniture"></use>
         </svg>
       </a>
-
       <ul class="menu-nav-list">
         <li class="menu-nav-item">
           <a class="menu-nav-link" href="#furniture-list">Наші меблі</a>
         </li>
         <li class="menu-nav-item">
-          <a class="menu-nav-link" href="#about-us">Про нас</a>
+          <a class="menu-nav-link" href="#section-about-us">Про нас</a>
+        </li>
+        <li class="menu-nav-item">
+          <a class="menu-nav-link" href="#popular-product">Популярне</a>
         </li>
         <li class="menu-nav-item">
           <a class="menu-nav-link" href="#faq">Часті питання</a>
@@ -58,12 +60,15 @@
       <a class="shop-btn" href="#furniture-list">До покупок</a>
     </nav>
     <button class="burger-btn" type="button">
-      <svg class="burger-icon" width="32" height="32">
+      <svg class="burger-icon-open" width="32" height="32">
         <use href="/js-shop-group-10/assets/sprite-DdT4mbFA.svg#icon-burger"></use>
+      </svg>
+      <svg class="burger-icon-close" width="32" height="32">
+        <use href="/js-shop-group-10/assets/sprite-DdT4mbFA.svg#icon-close"></use>
       </svg>
     </button>
   </div>
-  <div class="menu">
+  <div class="menu is-open">
     <div class="container mobil-menu-container">
       <a href="#hero" class="header-logo">
         <svg width="159" height="35">
@@ -72,34 +77,33 @@
       </a>
       <button type="button" class="close-btn">
         <svg class="close-icon" width="32" height="32">
-          <use href="/js-shop-group-10/assets/sprite-DdT4mbFA.svg#icon-close">
-          </use>
+          <use href="/js-shop-group-10/assets/sprite-DdT4mbFA.svg#icon-close"></use>
         </svg>
       </button>
-    </div>  
+    </div>
     <nav class="mobil-menu-nav">
-        <ul class="mobil-menu-nav-list">
-          <li class="mobil-menu-nav-item">
-            <a class="mobil-menu-nav-link" href="#furniture-list">Наші меблі</a>
-          </li>
-          <li class="mobil-menu-nav-item">
-            <a class="mobil-menu-nav-link" href="#about-us">Про нас</a>
-          </li>
-          <li class="mobil-menu-nav-item">
-            <a class="mobil-menu-nav-link" href="#faq">Часті питання</a>
-          </li>
-          <li class="mobil-menu-nav-item">
-            <a class="mobil-menu-nav-link" href="#feedback">Відгуки</a>
-          </li>
-        </ul>
-        <a class="menu-shop-btn" href="#furniture-list">До покупок</a>
+      <ul class="mobil-menu-nav-list">
+        <li class="mobil-menu-nav-item">
+          <a class="mobil-menu-nav-link" href="#furniture-list">Наші меблі</a>
+        </li>
+        <li class="mobil-menu-nav-item">
+          <a class="mobil-menu-nav-link" href="#section-about-us">Про нас</a>
+        </li>
+        <li class="mobil-menu-nav-item">
+          <a class="mobil-menu-nav-link" href="#popular-product">Популярне</a>
+        </li>
+        <li class="mobil-menu-nav-item">
+          <a class="mobil-menu-nav-link" href="#faq">Часті питання</a>
+        </li>
+        <li class="mobil-menu-nav-item">
+          <a class="mobil-menu-nav-link" href="#feedback">Відгуки</a>
+        </li>
+      </ul>
+      <a class="menu-shop-btn" href="#furniture-list">До покупок</a>
     </nav>
-  
     <div class="menu-overlay"></div>
   </div>
-  
 </header>
-
 
     <main>
       <!-- Hero Section -->
