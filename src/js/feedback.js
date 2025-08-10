@@ -24,22 +24,21 @@ function roundRating(rating) {
 }
 
 // функція для відтворення зірок
-function renderStars(rating, max = 5) {
-  let stars = '';
-  for (let i = 1; i <= max; i++) {
-    if (rating >= i) {
-      stars += '<span class="star star--full">★</span>';
-    } else if (rating >= i - 0.5) {
-      stars += `
-        <span class="star star--half">
-          <span class="star-bg">★</span>
-          <span class="star-fg">★</span>
-        </span>`;
-    } else {
-      stars += '<span class="star star--empty">★</span>';
-    }
-  }
-  return stars;
+function renderStars(rating = 0) {
+  const full = Math.floor(rating),
+    half = rating % 1 >= 0.5,
+    empty = 5 - full - (half ? 1 : 0);
+  const starSVG =
+    '<svg class="star-icon" viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M12 .587l3.668 7.431 8.2 1.192-5.934 5.786L19.335 24 12 19.897 4.665 24l1.401-8.998L.132 9.21l8.2-1.192z"/></svg>';
+  const halfSVG = `<svg class="star-icon half" viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><defs><linearGradient id="grad"><stop offset="50%" stop-color="currentColor"/><stop offset="50%" stop-color="#ccc"/></defs><path fill="url(#grad)" d="M12 .587l3.668 7.431 8.2 1.192-5.934 5.786L19.335 24 12 19.897 4.665 24l1.401-8.998L.132 9.21l8.2-1.192z"/></svg>`;
+  let s = '';
+  s += starSVG.repeat(full);
+  if (half) s += halfSVG;
+  s +=
+    '<svg class="star-icon empty" viewBox="0 0 24 24" width="20" height="20" fill="#ccc"><path d="M12 .587l3.668 7.431 8.2 1.192-5.934 5.786L19.335 24 12 19.897 4.665 24l1.401-8.998L.132 9.21l8.2-1.192z"/></svg>'.repeat(
+      empty
+    );
+  return `<div class="rating-stars">${s}</div>`;
 }
 
 // Функція для створення розмітки
@@ -81,7 +80,7 @@ async function initFeedbackSlider() {
     container.innerHTML = createMarkup(reviews);
     const enableLoop = reviews.length > 3;
 
-    const totalBullets = 5; // завжди 5 крапок
+    const totalBullets = 5;
     // Ініціалізуємо Swiper
     const swiper = new Swiper('.feedback-slider', {
       // ВАЖЛИВО: Реєструємо ОБИДВА модулі - Navigation та Pagination
@@ -90,7 +89,7 @@ async function initFeedbackSlider() {
       slidesPerView: 1,
       spaceBetween: 16,
       loop: true, // включаємо безкінечний цикл
-      // loop: enableLoop,
+
       // Налаштування для пагінації (крапочок)
       pagination: {
         el: '.swiper-pagination',
@@ -101,7 +100,7 @@ async function initFeedbackSlider() {
           }
           return '';
         },
-      }, // ← закрили pagination
+      },
       navigation: {
         nextEl: '.js-btn-forward',
         prevEl: '.js-btn-back',
@@ -138,5 +137,5 @@ async function initFeedbackSlider() {
     });
   }
 }
-// Запускаємо всю логіку
+
 initFeedbackSlider();
