@@ -8,11 +8,7 @@ function closeOrderModal(event) {
     const orderModalClose = document.querySelector('.open-order');
     if (orderModalClose) {
         orderModalClose.classList.remove('open-order');
-        document.removeEventListener('keydown', (event) => {
-        if (event.key === 'Escape') {
-                closeOrderModal();
-            }
-        });
+        document.body.style.overflow = '';
     }
 };
 
@@ -56,13 +52,13 @@ orderForm.addEventListener('submit', async (event) => {
     };
     try {
         const response = await axios.post('https://furniture-store.b.goit.study/api-docs/#/order', orderData);
+        closeOrderModal();
+        orderForm.reset();
         iziToast.success({
             title: 'Готово!',
             message: 'Замовлення успішно створено',
             position: 'topRight'
         });
-        closeOrderModal();
-        orderForm.reset();
     }
     catch (error) {
         iziToast.error({
