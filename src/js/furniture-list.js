@@ -41,7 +41,9 @@ async function getFurnitures(page = 1, category = '') {
   if (category) url += `&category=${category}`;
   const res = await fetch(url);
   if (!res.ok) throw new Error('Помилка отримання меблів');
-  return await res.json();
+  const result = await res.json();
+  furnitureList.setAttribute('data-items', JSON.stringify(result?.furnitures));
+  return result;
 }
 
 // --- Рендер категорій ---
