@@ -62,7 +62,7 @@ import{i as h,S as W,N as Z,P as J,A as re,a as K}from"./assets/vendor-CUDRsqBn.
     <div class="modal-wrapper">
       <div class="modal-images">
         <img class="main-image" src="${e.images[0]}" alt="${e.name}" />
-        <div class="modal-thumbs">${e.images.slice(1).map(s=>`<img src="${s}" alt="${e.name}"/>`).join("")}</div>
+        <div class="modal-thumbs">${e.images.slice(1).map(s=>`<img class="modal-thumb" src="${s}" alt="${e.name}"/>`).join("")}</div>
       </div>
       <div class="modal-info">
         <h2 class="modal-title">${e.name}</h2>
