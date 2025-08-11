@@ -57,6 +57,9 @@
 }
 
 @media only screen and (min-width: 1440px) {
+  .footer {
+    padding-bottom: 0;
+  }
   .screen-footer {
     display: flex;
     flex-direction: row;
