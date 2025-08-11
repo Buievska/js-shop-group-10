@@ -48,6 +48,7 @@ async function getFurnitures(page = 1, category = '') {
 
 // --- Рендер категорій ---
 function getImageUrl(name) {
+  if (!name) name = 'vsi-tovary.png';
   return new URL(`../img/furniture-list/${name}`, import.meta.url).href;
 }
 
