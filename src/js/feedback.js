@@ -140,4 +140,24 @@ async function initFeedbackSlider() {
   }
 }
 
-initFeedbackSlider();
+// ===================================================================
+// ВІДКЛАДЕНЕ ЗАВАНТАЖЕННЯ: Замість прямого виклику initFeedbackSlider()
+// ===================================================================
+
+const feedbackSection = document.querySelector('.feedback'); // <-- Переконайтесь, що у вашої секції відгуків є клас "feedback"
+
+if (feedbackSection) {
+  const feedbackObserver = new IntersectionObserver(
+    (entries, observer) => {
+      // Коли секція потрапляє в поле зору...
+      if (entries[0].isIntersecting) {
+        initFeedbackSlider(); // ...запускаємо нашу функцію
+        observer.unobserve(feedbackSection); // ...і зупиняємо спостереження
+      }
+    },
+    { rootMargin: '200px' }
+  ); // Почати завантаження за 200px до появи на екрані
+
+  // Кажемо спостерігачу стежити за нашою секцією
+  feedbackObserver.observe(feedbackSection);
+}
