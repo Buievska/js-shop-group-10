@@ -1,13 +1,34 @@
 .hero-section {
-  background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
-    image-set(
-      url('/img/hero/bg-hero-mobile-min.jpg') 1x,
-      url('/img/hero/bg-hero-mobile-2x-min.jpg') 2x
-    );
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+  position: relative;
+  overflow: hidden;
   padding: 160px 0;
+}
+
+.hero-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6));
+  z-index: 0; /* Дуже важливо: оверлей між картинкою (-1) і контентом (1) */
+}
+
+.hero-section .container {
+  position: relative;
+  z-index: 1; /* Гарантує, що контент буде на найвищому шарі */
+}
+
+.hero-background-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -1;
+  user-select: none;
 }
 
 .hero-main-title {
@@ -59,11 +80,6 @@
 
 @media screen and (min-width: 768px) {
   .hero-section {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
-      image-set(
-        url('/img/hero/bg-hero-tablet-min.jpg') 1x,
-        url('/img/hero/bg-hero-tablet-2x-min.jpg') 2x
-      );
     padding: 36px 0;
   }
 
@@ -87,11 +103,10 @@
 
 @media screen and (min-width: 1440px) {
   .hero-section {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-      image-set(
-        url('/img/hero/bg-hero-dekstop-min.jpg') 1x,
-        url('/img/hero/bg-hero-dekstop-2x-min.jpg') 2x
-      );
     padding: 92px 0;
+  }
+
+  .hero-section::before {
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5));
   }
 }
