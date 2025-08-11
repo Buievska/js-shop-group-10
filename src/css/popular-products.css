@@ -216,7 +216,7 @@ background: #6b0609;
 }
 @media (min-width: 1440px) {
   .popular-section {
-    padding: 80px 64px;
+    /* padding: 80px 64px; */
   }
   .section-title {
     font-size: 48px;
