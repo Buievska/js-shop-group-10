@@ -54,6 +54,10 @@
   width: 100%;
   border-radius: 8px;
   object-fit: cover;
+  aspect-ratio: 295 / 297;
+}
+.modal-thumb {
+  aspect-ratio: 140 / 197;
 }
 .modal-thumbs {
   display: flex;
@@ -150,6 +154,12 @@
   .modal-close {
     right: 30px;
   }
+  .main-image {
+    aspect-ratio: 640 / 297;
+  }
+  .modal-thumb {
+    aspect-ratio: 312 / 297;
+  }
 }
 
 @media screen and (min-width: 1440px) {
@@ -161,5 +171,11 @@
   }
   .modal-info {
     max-width: auto;
+  }
+  .main-image {
+    aspect-ratio: 580 / 308;
+  }
+  .modal-thumb {
+    aspect-ratio: 282 / 297;
   }
 }
