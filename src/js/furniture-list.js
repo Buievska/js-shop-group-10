@@ -465,13 +465,34 @@ if (loadMoreBtn) {
   });
 }
 
-// --- Ініціалізація ---
-(async function init() {
+// =================================================================
+// ВІДКЛАДЕНЕ ЗАВАНТАЖЕННЯ КАТАЛОГУ
+// =================================================================
+
+// Перетворюємо самовикликаючу функцію на звичайну
+async function initializeFurnitureList() {
   try {
     const categories = await getCategories();
     renderCategories(categories);
     loadFurniture();
   } catch (err) {
-    console.error('Помилка ініціалізації:', err);
+    console.error('Помилка ініціалізації каталогу:', err);
   }
-})();
+}
+
+// Створюємо спостерігача
+const furnitureSection = document.querySelector('.furniture-section');
+
+if (furnitureSection) {
+  const observer = new IntersectionObserver(
+    (entries, obs) => {
+      if (entries[0].isIntersecting) {
+        initializeFurnitureList(); // Викликаємо нашу велику функцію
+        obs.unobserve(furnitureSection); // Зупиняємо спостереження
+      }
+    },
+    { rootMargin: '400px' }
+  ); // Починаємо завантажувати за 400px до появи секції на екрані
+
+  observer.observe(furnitureSection);
+}
