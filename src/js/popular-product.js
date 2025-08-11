@@ -1,5 +1,3 @@
-
-
 // import Swiper from 'swiper';
 // import { Navigation, Pagination } from 'swiper/modules';
 // import 'swiper/css';
@@ -329,8 +327,6 @@
 //   setTimeout(initPopularSlider, 100);
 // });
 
-
-
 import Swiper from 'swiper';
 import { Navigation, Pagination } from 'swiper/modules';
 import 'swiper/css';
@@ -341,43 +337,53 @@ import 'izitoast/dist/css/iziToast.min.css';
 
 // ===== DOM =====
 const sliderContainer = document.getElementById('popular-slider-container');
-const sliderList      = document.getElementById('popular-slider');
-const btnLeft         = document.getElementById('btn-left');
-const btnRight        = document.getElementById('btn-right');
-const indicators      = document.getElementById('slider-indicators');
+const sliderList = document.getElementById('popular-slider');
+const btnLeft = document.getElementById('btn-left');
+const btnRight = document.getElementById('btn-right');
+const indicators = document.getElementById('slider-indicators');
 
 // МОДАЛКА (готова розмітка має бути в HTML)
-const modal      = document.getElementById('modal');
-const modalBody  = document.getElementById('modal-body');
+const modal = document.getElementById('modal');
+const modalBody = document.getElementById('modal-body');
 const modalClose = document.getElementById('modal-close');
 
 // ===== CONFIG / STATE =====
-const BASE_URL   = 'https://furniture-store.b.goit.study/api';
-const LIMIT      = 8;
-let page         = 1;
-let totalItems   = null;
-let isLoading    = false;
+const BASE_URL = 'https://furniture-store.b.goit.study/api';
+const LIMIT = 8;
+let page = 1;
+let totalItems = null;
+let isLoading = false;
 
-const cacheById  = new Map();
+const cacheById = new Map();
 window.__popularCache = cacheById; // зробимо кеш доступним глобально
 
 // ===== HELPERS =====
 const debounce = (fn, ms = 120) => {
   let t;
-  return (...args) => { clearTimeout(t); t = setTimeout(() => fn(...args), ms); };
+  return (...args) => {
+    clearTimeout(t);
+    t = setTimeout(() => fn(...args), ms);
+  };
 };
 
 // Простий рендер зірок з перевірками
 function renderStars(rate = 0) {
   const r = Math.max(0, Math.min(5, Math.round(Number(rate) || 0)));
-  return `<div class="stars" aria-label="Рейтинг ${r} з 5">${'★'.repeat(r)}${'☆'.repeat(5 - r)}</div>`;
+  return `<div class="stars" aria-label="Рейтинг ${r} з 5">${'★'.repeat(
+    r
+  )}${'☆'.repeat(5 - r)}</div>`;
 }
 
 function renderColorSwatches(color) {
   if (Array.isArray(color) && color.length) {
-    return color.map(c =>
-      `<span class="color-swatch" title="${String(c)}" style="background-color:${String(c)};"></span>`
-    ).join('');
+    return color
+      .map(
+        c =>
+          `<span class="color-swatch" title="${String(
+            c
+          )}" style="background-color:${String(c)};"></span>`
+      )
+      .join('');
   }
   if (typeof color === 'string' && color.trim()) {
     return `<span class="color-swatch" title="${color}" style="background-color:${color};"></span>`;
@@ -389,22 +395,27 @@ function renderColorSwatches(color) {
 function showModal(furniture = {}) {
   if (!modal || !modalBody) return;
 
-  const imgs     = Array.isArray(furniture.images) ? furniture.images : [];
-  const mainImg  = imgs[0] || 'https://via.placeholder.com/600x450?text=No+Image';
-  const name     = furniture.name || 'Без назви';
+  const imgs = Array.isArray(furniture.images) ? furniture.images : [];
+  const mainImg =
+    imgs[0] || 'https://via.placeholder.com/600x450?text=No+Image';
+  const name = furniture.name || 'Без назви';
   const category = furniture.category?.name || 'Категорія';
-  const price    = (typeof furniture.price === 'number')
-    ? furniture.price.toLocaleString()
-    : 'N/A';
-  const sizes    = furniture.sizes || '—';
-  const desc     = furniture.description || '';
+  const price =
+    typeof furniture.price === 'number'
+      ? furniture.price.toLocaleString()
+      : 'N/A';
+  const sizes = furniture.sizes || '—';
+  const desc = furniture.description || '';
 
   modalBody.innerHTML = `
     <div class="modal-wrapper">
       <div class="modal-images">
         <img class="main-image" src="${mainImg}" alt="${name}" />
         <div class="modal-thumbs">
-          ${imgs.slice(1).map(i => `<img class="modal-thumb" src="${i}" alt="${name}" />`).join('')}
+          ${imgs
+            .slice(1)
+            .map(i => `<img class="modal-thumb" src="${i}" alt="${name}" />`)
+            .join('')}
         </div>
       </div>
       <div class="modal-info">
@@ -496,26 +507,31 @@ async function fetchFurnitureById(id) {
 
 // ===== RENDER CARDS =====
 function createFurnitureCardsMarkup(furnitures) {
-  return furnitures.map(f => {
-    const imageUrl = f.images?.[0] || 'https://via.placeholder.com/300x200?text=No+Image';
-    const colors   = Array.isArray(f.color) ? f.color.slice(0, 3) : [];
-    const dots     = Array.from({ length: 3 }, (_, i) => {
-      const c = colors[i];
-      return c
-        ? `<span class="color-dot" style="background:${c}"></span>`
-        : `<span class="color-dot placeholder"></span>`;
-    }).join('');
-    return `
+  return furnitures
+    .map(f => {
+      const imageUrl =
+        f.images?.[0] || 'https://via.placeholder.com/300x200?text=No+Image';
+      const colors = Array.isArray(f.color) ? f.color.slice(0, 3) : [];
+      const dots = Array.from({ length: 3 }, (_, i) => {
+        const c = colors[i];
+        return c
+          ? `<span class="color-dot" style="background:${c}"></span>`
+          : `<span class="color-dot placeholder"></span>`;
+      }).join('');
+      return `
       <li class="furniture-card swiper-slide">
         <img src="${imageUrl}" alt="${f.name || 'Товар'}" class="card-img" />
         <div class="card-content">
           <h3 class="card-title">${f.name || 'Без назви'}</h3>
           <div class="color-list">${dots}</div>
-          <p class="card-price">${typeof f.price === 'number' ? f.price + ' грн' : '—'}</p>
+          <p class="card-price">${
+            typeof f.price === 'number' ? f.price + ' грн' : '—'
+          }</p>
           <button class="details-btn" data-id="${f._id}">Детальніше</button>
         </div>
       </li>`;
-  }).join('');
+    })
+    .join('');
 }
 
 // ===== SWIPER =====
@@ -524,7 +540,12 @@ const TOTAL_BULLETS = 7;
 
 async function loadMoreIfNeeded() {
   if (isLoading) return;
-  if (totalItems !== null && sliderList && sliderList.children.length >= totalItems) return;
+  if (
+    totalItems !== null &&
+    sliderList &&
+    sliderList.children.length >= totalItems
+  )
+    return;
 
   isLoading = true;
   page += 1;
@@ -552,7 +573,10 @@ async function initPopularSlider() {
   isLoading = true;
   try {
     const data = await fetchPopularFurniture({ page, limit: LIMIT });
-    totalItems = typeof data.totalItems === 'number' ? data.totalItems : data.furnitures.length;
+    totalItems =
+      typeof data.totalItems === 'number'
+        ? data.totalItems
+        : data.furnitures.length;
 
     sliderList.innerHTML = createFurnitureCardsMarkup(data.furnitures);
 
@@ -561,8 +585,8 @@ async function initPopularSlider() {
       loop: window.innerWidth < 768,
       spaceBetween: 16,
       breakpoints: {
-        0:    { slidesPerView: 1, centeredSlides: true,  spaceBetween: 8  },
-        768:  { slidesPerView: 2, centeredSlides: false, spaceBetween: 20 },
+        0: { slidesPerView: 1, centeredSlides: true, spaceBetween: 8 },
+        768: { slidesPerView: 2, centeredSlides: false, spaceBetween: 20 },
         1440: { slidesPerView: 4, centeredSlides: false, spaceBetween: 24 },
       },
       // підстраховки для ресайзу/DOM-змін
@@ -573,17 +597,24 @@ async function initPopularSlider() {
       roundLengths: true,
       watchOverflow: true,
       on: {
-        resize() { this.update(); },
-        beforeResize() { this.updateSize(); },
+        resize() {
+          this.update();
+        },
+        beforeResize() {
+          this.updateSize();
+        },
         slideChange() {
           if (indicators) {
             const bullets = indicators.querySelectorAll('.popular-bullet');
             if (bullets.length) {
               const activeIndex = this.realIndex % TOTAL_BULLETS;
-              bullets.forEach((b, i) => b.classList.toggle('popular-bullet-active', i === activeIndex));
+              bullets.forEach((b, i) =>
+                b.classList.toggle('popular-bullet-active', i === activeIndex)
+              );
             }
           }
-          const slidesLeft = this.slides.length - this.realIndex - this.params.slidesPerView;
+          const slidesLeft =
+            this.slides.length - this.realIndex - this.params.slidesPerView;
           if (slidesLeft <= 3) loadMoreIfNeeded();
         },
         reachEnd: () => loadMoreIfNeeded(),
@@ -599,7 +630,8 @@ async function initPopularSlider() {
         clickable: true,
         bulletClass: 'popular-bullet',
         bulletActiveClass: 'popular-bullet-active',
-        renderBullet: (index, className) => index < TOTAL_BULLETS ? `<span class="${className}"></span>` : '',
+        renderBullet: (index, className) =>
+          index < TOTAL_BULLETS ? `<span class="${className}"></span>` : '',
       };
     }
 
@@ -607,32 +639,42 @@ async function initPopularSlider() {
 
     // дати верстці «осісти», потім оновити
     requestAnimationFrame(() => swiperInstance?.update());
-    window.addEventListener('resize', debounce(() => {
-      if (!swiperInstance) return;
-      swiperInstance.updateSize();
-      swiperInstance.updateSlides();
-      swiperInstance.update();
-    }, 120));
+    window.addEventListener(
+      'resize',
+      debounce(() => {
+        if (!swiperInstance) return;
+        swiperInstance.updateSize();
+        swiperInstance.updateSlides();
+        swiperInstance.update();
+      }, 120)
+    );
 
     swiperInstance.emit('slideChange');
   } catch (error) {
     console.error('Помилка ініціалізації слайдера:', error);
-    iziToast.error({ title: 'Помилка', message: 'Не вдалося завантажити товари.' });
+    iziToast.error({
+      title: 'Помилка',
+      message: 'Не вдалося завантажити товари.',
+    });
   } finally {
     isLoading = false;
   }
 }
 
 // ===== BOOTSTRAP / EVENTS =====
-document.addEventListener('DOMContentLoaded', () => {
-  // модалка (підписки один раз)
+
+function initializePage() {
+  // 1. Налаштовуємо модалку (це можна робити одразу)
   modalClose?.addEventListener('click', closeModal);
-  window.addEventListener('click', e => { if (e.target === modal) closeModal(); });
+  window.addEventListener('click', e => {
+    if (e.target === modal) closeModal();
+  });
   window.addEventListener('keydown', e => {
-    if (e.key === 'Escape' && !modal?.classList.contains('hidden')) closeModal();
+    if (e.key === 'Escape' && !modal?.classList.contains('hidden'))
+      closeModal();
   });
 
-  // делегування кліку по картках
+  // 2. Налаштовуємо делегування кліків (теж можна одразу)
   if (sliderList) {
     sliderList.addEventListener('click', async e => {
       const btn = e.target.closest('.details-btn');
@@ -642,16 +684,48 @@ document.addEventListener('DOMContentLoaded', () => {
       let item = cacheById.get(id);
 
       if (!item) {
-        iziToast.info({ title: 'Завантаження...', message: 'Отримуємо деталі товару.' });
+        iziToast.info({
+          title: 'Завантаження...',
+          message: 'Отримуємо деталі товару.',
+        });
         item = await fetchFurnitureById(id);
       }
 
       item
         ? showModal(item)
-        : iziToast.error({ title: 'Помилка', message: 'Не вдалося завантажити інформацію про товар.' });
+        : iziToast.error({
+            title: 'Помилка',
+            message: 'Не вдалося завантажити інформацію про товар.',
+          });
     });
   }
 
-  // старт слайдера
-  setTimeout(initPopularSlider, 100);
-});
+  // 3. Створюємо спостерігача для секції зі слайдером
+  const popularSection = document.querySelector('.popular-section');
+  if (!popularSection) {
+    console.error(
+      'Не знайдено секцію для слайдера. Завантаження не відбудеться.'
+    );
+    return;
+  }
+
+  const sliderObserver = new IntersectionObserver(
+    (entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          // Якщо секція з'явилась в полі зору - запускаємо ініціалізацію
+          initPopularSlider();
+          // І припиняємо спостереження, бо нам це потрібно лише один раз
+          observer.unobserve(popularSection);
+        }
+      });
+    },
+    { rootMargin: '200px' }
+  );
+
+  // Кажемо спостерігачу стежити за нашою секцією
+  sliderObserver.observe(popularSection);
+}
+
+// Запускаємо всю ініціалізацію після завантаження HTML
+document.addEventListener('DOMContentLoaded', initializePage);
