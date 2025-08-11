@@ -137,3 +137,20 @@
 .swiper-pagination-bullet {
   transition: background-color 0.3s ease !important;
 }
+
+/* деактіванція кнопок */
+.btn-circle:hover:not(.swiper-button-disabled),
+.btn-circle:focus-visible:not(.swiper-button-disabled) {
+  background-color: #975052 !important;
+}
+.btn-circle:active:not(.swiper-button-disabled) {
+  background-color: #6b0609 !important;
+  transform: scale(0.95);
+}
+
+.btn-circle.swiper-button-disabled {
+  pointer-events: none;
+  cursor: default;
+  outline: none;
+  transform: none;
+}
