@@ -152,24 +152,24 @@
 }
 
 /* Кнопка "Завантажити більше" */
+
 .load-more-mobile {
   display: block;
-  width: 335px;
+  width: 100%;
+  /max-width: 335px;
   height: 46px;
-  margin: auto;
+  margin: 0 auto;
   padding: 10px 24px;
   font-size: 16px;
   border-radius: 100px;
   background-color: #6b0609;
   color: white;
-
   font-weight: 500;
-  font-size: 16px;
   line-height: 160%;
-
   border: none;
   cursor: pointer;
   transition: background-color 0.3s;
+  box-sizing: border-box;
 }
 
 .load-more-mobile:hover {
