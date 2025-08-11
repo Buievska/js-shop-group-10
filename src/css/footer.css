@@ -3,6 +3,7 @@
   font-weight: 400;
   line-height: 1.6;
   color: #ffffff;
+  padding-bottom: 32px;
 }
 .screen-footer {
   display: flex;
