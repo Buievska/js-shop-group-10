@@ -316,8 +316,106 @@ async function loadFurniture() {
     }
   } catch (err) {
     console.error('Помилка завантаження меблів:', err);
+    showToast('Не вдалося завантажити меблі', 'error', loadFurniture);
   }
 }
+
+function showToast(message, type = 'error') {
+  const toast = document.createElement('div');
+  toast.className = `toast ${type}`;
+
+  const icon = document.createElement('span');
+  icon.className = 'icon';
+  icon.textContent = type === 'success' ? '🏠' : '🛋️';
+
+  const text = document.createElement('span');
+  text.textContent = message;
+
+  toast.appendChild(icon);
+  toast.appendChild(text);
+
+  document.body.appendChild(toast);
+
+  setTimeout(() => toast.classList.add('show'), 100);
+  setTimeout(() => {
+    toast.classList.remove('show');
+    setTimeout(() => toast.remove(), 500);
+  }, 4000);
+}
+
+// Запит каталогу з бекенду
+async function loadCatalog(showLoading = true) {
+  if (!navigator.onLine) {
+    showToast('Відсутній інтернет. Перевірте підключення.', 'error');
+    return;
+  }
+
+  if (showLoading) {
+    showToast('Завантаження каталогу...', 'success');
+  }
+
+  try {
+    const response = await fetch(
+      'https://furniture-store.b.goit.study/api/furniture'
+    );
+    if (!response.ok) throw new Error('Помилка сервера');
+
+    const data = await response.json();
+    console.log('Каталог завантажено:', data);
+
+    showToast('Каталог успішно завантажено!', 'success');
+    // renderCatalog(data);
+  } catch (error) {
+    if (
+      error.message.includes('Failed to fetch') ||
+      error.message.includes('NetworkError')
+    ) {
+      showToast('Не вдалося завантажити каталог товарів.', 'error');
+    }
+  }
+}
+
+// При втраті інтернету
+window.addEventListener('offline', () => {
+  showToast('Відсутнє інтернет-з’єднання. Перевірте підключення', 'error');
+});
+
+// При відновленні інтернету
+window.addEventListener('online', () => {
+  showToast(
+    'Інтернет з’єднання відновлено! Завантаження каталогу...',
+    'success'
+  );
+  loadCatalog(false);
+});
+
+// Ловимо помилки через відсутність інтернету
+window.addEventListener('error', event => {
+  const msg = event.message || '';
+  if (msg.includes('Failed to fetch') || msg.includes('NetworkError')) {
+    showToast('Проблема з підключенням до інтернету.', 'error');
+  }
+});
+
+// --- Дебаунс функція для оптимізації resize ---
+function debounce(fn, delay) {
+  let timeoutId;
+  return function (...args) {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => fn.apply(this, args), delay);
+  };
+}
+
+// --- Обробник зміни розміру з дебаунсом ---
+window.addEventListener(
+  'resize',
+  debounce(() => {
+    loadedPagesCount = 1;
+    allLoadedFurnitures = [];
+    currentPage = 1;
+    loadFurniture();
+  }, 300)
+);
 
 // --- Обробники подій ---
 if (categoryList) {
