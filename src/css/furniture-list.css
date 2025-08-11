@@ -103,7 +103,6 @@
 .furniture-item {
   display: flex;
   flex-direction: column;
-  width: 335px;
   height: 450px;
   min-width: 276px;
   box-sizing: border-box;
