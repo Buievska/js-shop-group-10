@@ -1,0 +1,156 @@
+.feedback-title {
+  font-weight: 700;
+  font-size: 36px;
+  line-height: 1.2;
+  letter-spacing: 0.01em;
+  margin-bottom: 24px;
+}
+.icon-feedback {
+  fill: #080c09;
+}
+.feedback-text {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.6;
+  color: #080c09;
+  margin-bottom: 80px;
+}
+.star-rating {
+  margin-bottom: 24px;
+}
+.feedback-descr {
+  font-weight: 500;
+  font-size: 18px;
+  margin-bottom: 24px;
+}
+.feedback-name {
+  font-weight: 700;
+  font-size: 16px;
+}
+
+/* 
+кнопки та свайпер */
+
+.swiper-pagination {
+  position: static !important;
+}
+
+.nav-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-top: 32px;
+}
+
+.swiper-pagination {
+  display: flex;
+  align-items: center;
+  width: auto !important;
+  margin: 0;
+  padding: 0;
+}
+
+.button-container {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+
+.btn-circle {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border-radius: 50%;
+  background-color: #f2f2f2;
+  border: 1px solid rgba(8, 12, 9, 0.15);
+  transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1),
+    color 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  color: #333;
+}
+.btn-circle:hover,
+.btn-circle:focus {
+  background-color: #975052 !important;
+}
+.btn-circle:active {
+  background-color: #6b0609 !important;
+  transform: scale(0.95);
+}
+
+/* зірочка */
+.star {
+  display: inline-block;
+  font-size: 28px;
+  color: #e0e0e0;
+  position: relative;
+  width: 1em;
+  text-align: center;
+  line-height: 1;
+  vertical-align: middle;
+}
+.star--full {
+  color: #111;
+  z-index: 1;
+}
+.star--half {
+  position: relative;
+  width: 1em;
+  height: 1em;
+  display: inline-block;
+  vertical-align: middle;
+}
+.star--half .star-bg {
+  color: #e0e0e0;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+.star--half .star-fg {
+  color: #111;
+  position: absolute;
+  left: 1.25px;
+  top: 0;
+  width: 50%;
+  height: 100%;
+  overflow: hidden;
+  z-index: 2;
+}
+.star--empty {
+  color: #e0e0e0;
+}
+
+.swiper-pagination-bullet {
+  background-color: #ccc !important;
+  opacity: 1;
+}
+
+.swiper-pagination-bullet-active {
+  background-color: #000 !important;
+}
+
+.swiper-pagination-bullet {
+  transition: background-color 0.3s ease !important;
+}
+
+/* деактіванція кнопок */
+.btn-circle:hover:not(.swiper-button-disabled),
+.btn-circle:focus-visible:not(.swiper-button-disabled) {
+  background-color: #975052 !important;
+}
+.btn-circle:active:not(.swiper-button-disabled) {
+  background-color: #6b0609 !important;
+  transform: scale(0.95);
+}
+
+.btn-circle.swiper-button-disabled {
+  pointer-events: none;
+  cursor: default;
+  outline: none;
+  transform: none;
+}

@@ -1,0 +1,124 @@
+.faq-section {
+  padding-top: 48px;
+  padding-bottom: 48px;
+  background-color: #fff;
+}
+
+.accordion-container {
+  border-bottom: 1px solid rgba(8, 12, 9, 0.15);
+}
+
+.faq-title {
+  font-weight: 700;
+  font-size: 36px;
+  line-height: 1.2;
+  letter-spacing: 0.01em;
+  text-align: center;
+  color: #080c09;
+  margin-bottom: 32px;
+}
+.ac {
+  background: none;
+  margin-bottom: 0px !important;
+  --color-light-grey: initial !important;
+}
+
+.ac-header {
+  width: 100%;
+  border-top: 1px solid rgba(8, 12, 9, 0.15);
+  display: flex;
+  justify-content: center;
+}
+
+.ac .ac-trigger {
+  padding: 0px !important;
+  color: #080c09 !important;
+  height: 92px;
+}
+
+.ac .min-button {
+  height: 72px;
+}
+
+.ac .ac-trigger:hover .question {
+  color: #975052 !important;
+}
+
+.ac .ac-trigger:focus .question {
+  color: #975052 !important;
+}
+
+.ac .ac-trigger:active .question {
+  color: #6b0609 !important;
+}
+
+.ac .ac-trigger::after {
+  content: '' !important;
+}
+.ac .ac-trigger:focus-visible {
+  outline: 1px solid #6b0609;
+  box-shadow: 0 0 0 1px #6b0609;
+  border-radius: 6px;
+}
+
+.icon-arrow-cont {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.question {
+  max-width: 279px;
+  font-family: 'Raleway', sans-serif !important;
+  font-weight: 700 !important;
+  font-size: 16px !important;
+  line-height: 1.6;
+}
+
+.icon-arrow {
+  fill: #080c09;
+  stroke-width: 1px;
+  stroke: #080c09;
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+  transform: rotate(0deg);
+  transition: transform 0.21s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.ac.is-active .icon-arrow {
+  transform: rotate(180deg);
+}
+
+.ac .ac-panel .ac-text {
+  padding: 0 !important;
+  margin-bottom: 24px !important;
+  font-family: 'Raleway', sans-serif !important;
+  font-weight: 400 !important;
+  font-size: 16px !important;
+  line-height: 1.6 !important;
+  color: #080c09 !important;
+}
+
+@media only screen and (min-width: 768px) {
+  .faq-title {
+    font-size: 48px;
+  }
+  .ac .ac-trigger {
+    height: 72px;
+  }
+  .question {
+    max-width: 648px;
+    font-size: 18px !important;
+  }
+}
+
+@media only screen and (min-width: 1440px) {
+  .faq-section {
+    padding-top: 80px;
+    padding-bottom: 80px;
+  }
+  .question {
+    max-width: 809px;
+  }
+}

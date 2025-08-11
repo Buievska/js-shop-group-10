@@ -1,6 +1,6 @@
-#section-about-us {
+#about-us {
   background-color: #f0e6e6;
-  padding: 64px 0;
+  padding: 40px 0;
 }
 
 .text-wrap-about-us {
@@ -22,7 +22,9 @@
 }
 
 .img-wrap-about-us {
-  max-width: 335px;
+  max-width: 100%;
+  border-radius: 8px;
+  overflow: hidden;
 }
 
 @media only screen and (min-width: 768px) {
@@ -45,7 +47,7 @@
 
 @media only screen and (min-width: 1440px) {
   #section-about-us {
-    padding: 64px 0;
+    padding: 40px 0;
   }
 
   .about-us-container {
