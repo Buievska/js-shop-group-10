@@ -88,7 +88,8 @@ async function initFeedbackSlider() {
       slidesPerGroup: 1,
       slidesPerView: 1,
       spaceBetween: 16,
-      loop: true, // включаємо безкінечний цикл
+      loop: false,
+      watchOverflow: true,
 
       // Налаштування для пагінації (крапочок)
       pagination: {
@@ -104,6 +105,8 @@ async function initFeedbackSlider() {
       navigation: {
         nextEl: '.js-btn-forward',
         prevEl: '.js-btn-back',
+
+        disabledClass: 'swiper-button-disabled',
       },
       // Адаптивність
       breakpoints: {
@@ -120,14 +123,13 @@ async function initFeedbackSlider() {
       },
     });
 
-    swiper.on('slideChange', () => {
+    swiper.on('init slideChange', () => {
       const bullets = document.querySelectorAll('.swiper-pagination-bullet');
       bullets.forEach(b =>
         b.classList.remove('swiper-pagination-bullet-active')
       );
-
       const activeIndex = swiper.realIndex % totalBullets;
-      bullets[activeIndex].classList.add('swiper-pagination-bullet-active');
+      bullets[activeIndex]?.classList.add('swiper-pagination-bullet-active');
     });
   } catch (error) {
     iziToast.error({
