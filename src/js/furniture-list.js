@@ -66,7 +66,7 @@ function renderCategories(categories) {
     'Меблі для передпокою': 'mebli-peredpokiy.png',
     'Меблі для ванної кімнати': 'mebli-vanna.png',
     'Садові та вуличні меблі': 'sadovi-mebli.png',
-    'Декор та аксесуари': 'dekor-aksesuary.png',
+    'Декор та аксесуари': 'dekor-aksesuari.png',
   };
 
   const markup = categories
