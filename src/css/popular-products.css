@@ -18,7 +18,7 @@
   width: 100%;
 }
 .container-popular {
-  padding: 40px 16px; 
+  padding: 40px 16px;
   display: block;
   margin: 0 auto;
   max-width: 1318px;
@@ -30,7 +30,7 @@
   line-height: 1.2;
   letter-spacing: 0.01em;
   text-align: center;
-  color: #080C09;
+  color: #080c09;
   margin-bottom: 24px;
 }
 .popular-slider-container {
@@ -43,7 +43,6 @@
   padding: 0;
   margin: 0;
 }
-
 
 #popular-slider {
   flex-wrap: nowrap !important;
@@ -102,7 +101,7 @@
   width: 20px;
   height: 20px;
   border-radius: 50%;
-  border: 1px solid #C7C3BB;
+  border: 1px solid #c7c3bb;
 }
 .color-list {
   display: flex;
@@ -121,12 +120,10 @@
   border-radius: 100px;
   padding: 10px 24px;
   height: 46px;
-  box-shadow:
-    0 1px 2px rgba(8, 12, 9, 0.05),
-    inset 0 -2px 1px rgba(8, 12, 9, 0.05),
-    inset 0 0 0 1px rgba(8, 12, 9, 0.05);
+  box-shadow: 0 1px 2px rgba(8, 12, 9, 0.05),
+    inset 0 -2px 1px rgba(8, 12, 9, 0.05), inset 0 0 0 1px rgba(8, 12, 9, 0.05);
   background: rgba(8, 12, 9, 0.05);
-  font-family: "Raleway", sans-serif;
+  font-family: 'Raleway', sans-serif;
   font-weight: 500;
   font-size: 14px;
   line-height: 1.6;
@@ -138,15 +135,21 @@
 }
 
 .details-btn:hover {
-  box-shadow: 0 1px 2px 0 rgba(8, 12, 9, 0.05), inset 0 -2px 1px 0 rgba(0, 0, 0, 0.2), inset 0 0 0 1px rgba(8, 12, 9, 0.15), inset 0 2px 1px 0 rgba(255, 255, 255, 0.25), inset 0 32px 24px 0 rgba(255, 255, 255, 0.05);
-background: #6b0609;
-opacity: 0.5;
-color: #fff;
+  box-shadow: 0 1px 2px 0 rgba(8, 12, 9, 0.05),
+    inset 0 -2px 1px 0 rgba(0, 0, 0, 0.2), inset 0 0 0 1px rgba(8, 12, 9, 0.15),
+    inset 0 2px 1px 0 rgba(255, 255, 255, 0.25),
+    inset 0 32px 24px 0 rgba(255, 255, 255, 0.05);
+  background: #6b0609;
+  opacity: 0.5;
+  color: #fff;
 }
 
 .details-btn:active {
-  box-shadow: 0 1px 2px 0 rgba(8, 12, 9, 0.05), inset 0 -2px 1px 0 rgba(0, 0, 0, 0.2), inset 0 0 0 1px rgba(8, 12, 9, 0.15), inset 0 2px 1px 0 rgba(255, 255, 255, 0.25), inset 0 32px 24px 0 rgba(255, 255, 255, 0.05);
-background: #6b0609;
+  box-shadow: 0 1px 2px 0 rgba(8, 12, 9, 0.05),
+    inset 0 -2px 1px 0 rgba(0, 0, 0, 0.2), inset 0 0 0 1px rgba(8, 12, 9, 0.15),
+    inset 0 2px 1px 0 rgba(255, 255, 255, 0.25),
+    inset 0 32px 24px 0 rgba(255, 255, 255, 0.05);
+  background: #6b0609;
 }
 
 .popular-controls {
@@ -187,7 +190,7 @@ background: #6b0609;
   padding: 0;
   border-radius: 50%;
   border: 1px solid rgba(8, 12, 9, 0.15);
-  background: #F2F2F2;
+  background: #f2f2f2;
   transition: transform 0.15s ease, background-color 0.15s ease,
     border-color 0.15s ease, opacity 0.15s ease;
   cursor: pointer;
@@ -196,10 +199,8 @@ background: #6b0609;
   width: 24px;
   height: 24px;
   display: block;
-  fill: currentColor;  
- 
+  fill: currentColor;
 }
-
 
 .slider-btn {
   color: #080c09;
@@ -209,7 +210,7 @@ background: #6b0609;
 .slider-btn:focus-visible:not(:disabled) {
   transform: scale(1.05);
   background: #975052;
-  border: 1px solid rgba(8,12,9,0.15);
+  border: 1px solid rgba(8, 12, 9, 0.15);
   outline: none;
   color: #fff;
 }
@@ -217,13 +218,12 @@ background: #6b0609;
 .slider-btn:active:not(:disabled) {
   transform: scale(0.98);
   background: #6b0609;
-  border: 1px solid rgba(8,12,9,0.15);
+  border: 1px solid rgba(8, 12, 9, 0.15);
   color: #fff;
 }
-  /* .slider-btn .svg {
+/* .slider-btn .svg {
     color: #080c09;
   } */
-
 
 @media (min-width: 768px) {
   .section-title {
@@ -233,7 +233,7 @@ background: #6b0609;
 }
 @media (min-width: 1440px) {
   .popular-section {
-   padding: 80px 0; 
+    padding: 80px 0;
   }
   .section-title {
     font-size: 48px;
@@ -242,10 +242,9 @@ background: #6b0609;
 }
 #popular-slider.swiper-wrapper {
   display: flex !important;
-  flex-wrap: nowrap !important;   
-  gap: 0 !important;              
+  flex-wrap: nowrap !important;
+  gap: 0 !important;
 }
 #popular-slider .swiper-slide {
   flex-shrink: 0 !important;
 }
-
