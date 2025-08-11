@@ -158,7 +158,7 @@
     aspect-ratio: 640 / 297;
   }
   .modal-thumb {
-    aspect-ratio: 312 / 297;
+    aspect-ratio: 312 / 197;
   }
 }
 
@@ -176,6 +176,6 @@
     aspect-ratio: 580 / 308;
   }
   .modal-thumb {
-    aspect-ratio: 282 / 297;
+    aspect-ratio: 282 / 197;
   }
 }
