@@ -174,8 +174,10 @@ function renderPagination(current, total) {
 
   pagination.appendChild(
     createArrowButton('left', { disabled: current === 1 }, () => {
-      currentPage--;
-      loadFurniture();
+      if (currentPage > 1) {
+        currentPage--;
+        loadFurniture();
+      }
     })
   );
 
@@ -273,20 +275,26 @@ function renderPagination(current, total) {
 
   pagination.appendChild(
     createArrowButton('right', { disabled: current === total }, () => {
-      currentPage++;
-      loadFurniture();
+      if (currentPage < totalPages) {
+        currentPage++;
+        loadFurniture();
+      }
     })
   );
 }
 
 // --- Завантажити меблі ---
 async function loadFurniture() {
+  // Захист currentPage, щоб не було менше 1 і не більше totalPages
+  if (currentPage < 1) currentPage = 1;
+  if (currentPage > totalPages) currentPage = totalPages;
+
   const isMobile = window.innerWidth <= 768;
 
   try {
     const data = await getFurnitures(
       isMobile ? 1 : currentPage,
-      selectedCategory
+      selectedCategory || ''
     );
     totalPages = Math.ceil(data.totalItems / limit);
 
