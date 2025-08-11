@@ -40,7 +40,9 @@ function showModal(furniture) {
   }" />
         <div class="modal-thumbs">${furniture.images
           .slice(1)
-          .map(i => `<img src="${i}" alt="${furniture.name}"/>`)
+          .map(
+            i => `<img class="modal-thumb" src="${i}" alt="${furniture.name}"/>`
+          )
           .join('')}</div>
       </div>
       <div class="modal-info">
