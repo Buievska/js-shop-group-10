@@ -466,10 +466,10 @@ if (loadMoreBtn) {
 }
 
 // =================================================================
-// ВІДКЛАДЕНЕ ЗАВАНТАЖЕННЯ КАТАЛОГУ
+// ВІДКЛАДЕНЕ ЗАВАНТАЖЕННЯ КАТАЛОГУ (версія 2.0)
 // =================================================================
 
-// Перетворюємо самовикликаючу функцію на звичайну
+// Ваша основна функція ініціалізації (залишається без змін)
 async function initializeFurnitureList() {
   try {
     const categories = await getCategories();
@@ -480,19 +480,19 @@ async function initializeFurnitureList() {
   }
 }
 
-// Створюємо спостерігача
-const furnitureSection = document.querySelector('.furniture-section');
+// Нова логіка "лінивого" запуску
+const lazyLoadFurnitureList = () => {
+  // Викликаємо нашу основну функцію
+  initializeFurnitureList();
 
-if (furnitureSection) {
-  const observer = new IntersectionObserver(
-    (entries, obs) => {
-      if (entries[0].isIntersecting) {
-        initializeFurnitureList(); // Викликаємо нашу велику функцію
-        obs.unobserve(furnitureSection); // Зупиняємо спостереження
-      }
-    },
-    { rootMargin: '400px' }
-  ); // Починаємо завантажувати за 400px до появи секції на екрані
+  // Видаляємо слухачів, щоб вони не спрацьовували знову
+  window.removeEventListener('scroll', lazyLoadFurnitureList);
+  window.removeEventListener('mousemove', lazyLoadFurnitureList);
+  window.removeEventListener('touchstart', lazyLoadFurnitureList);
+};
 
-  observer.observe(furnitureSection);
-}
+// Додаємо слухачів, які спрацюють лише ОДИН РАЗ ({ once: true })
+// при першій же взаємодії користувача зі сторінкою
+window.addEventListener('scroll', lazyLoadFurnitureList, { once: true });
+window.addEventListener('mousemove', lazyLoadFurnitureList, { once: true });
+window.addEventListener('touchstart', lazyLoadFurnitureList, { once: true });
