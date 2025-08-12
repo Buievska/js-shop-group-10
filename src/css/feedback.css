@@ -126,8 +126,8 @@
 }
 
 .swiper-pagination-bullet {
-  background-color: #ccc !important;
-  opacity: 1;
+  background-color: #080c09 !important;
+  opacity: 20;
 }
 
 .swiper-pagination-bullet-active {
@@ -153,4 +153,22 @@
   cursor: default;
   outline: none;
   transform: none;
+}
+
+@media screen and (min-width: 768px) {
+  .feedback-title {
+    font-size: 48px;
+  }
+
+  .feedback-text {
+    font-size: 18px;
+  }
+
+  .feedback-descr {
+    font-size: 20px;
+  }
+
+  .nav-row {
+    margin-top: 48px;
+  }
 }
