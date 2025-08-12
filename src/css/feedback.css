@@ -11,12 +11,11 @@
   border-radius: 8px;
   overflow: hidden;
   background-color: #fff; 
-  transition: box-shadow 0.3s ease, transform 0.3s ease;
+  transition: transform 0.3s ease;
   
 }
 
 .feedback-item:hover {
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
   transform: translateY(-2px);
 
   
