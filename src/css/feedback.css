@@ -127,11 +127,12 @@
 
 .swiper-pagination-bullet {
   background-color: #080c09 !important;
-  opacity: 20;
+  opacity: 0.2;
 }
 
 .swiper-pagination-bullet-active {
   background-color: #000 !important;
+  opacity: 1;
 }
 
 .swiper-pagination-bullet {
