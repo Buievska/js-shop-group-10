@@ -1,3 +1,8 @@
+.feedback {
+  padding-top: 24px;
+  padding-bottom: 32px;
+}
+
 .feedback-title {
   font-weight: 700;
   font-size: 36px;
@@ -171,5 +176,16 @@
 
   .nav-row {
     margin-top: 48px;
+  }
+
+  .feedback {
+    padding-bottom: 16px;
+  }
+}
+
+@media screen and (min-width: 1440px) {
+  .feedback {
+    padding-top: 40px;
+    padding-bottom: 32px;
   }
 }

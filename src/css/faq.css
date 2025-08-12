@@ -1,6 +1,5 @@
 .faq-section {
-  padding-top: 48px;
-  padding-bottom: 48px;
+  padding: 24px 0;
   background-color: #fff;
 }
 
@@ -120,8 +119,7 @@
     align-items: center;
   }
   .faq-section {
-    padding-top: 80px;
-    padding-bottom: 80px;
+    padding: 40px 0;
   }
 
   .accordion-container {

@@ -1,6 +1,6 @@
 #about-us {
   background-color: #f0e6e6;
-  padding: 40px 0;
+  padding: 24px 0;
 }
 
 .text-wrap-about-us {
@@ -46,7 +46,7 @@
 }
 
 @media only screen and (min-width: 1440px) {
-  #section-about-us {
+  #about-us {
     padding: 40px 0;
   }
 
