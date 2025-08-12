@@ -10,6 +10,22 @@
   letter-spacing: 0.01em;
   margin-bottom: 24px;
 }
+
+
+.feedback-item {
+  border-radius: 8px;
+  overflow: hidden;
+  background-color: #fff; 
+  transition: transform 0.3s ease;
+  
+}
+
+.feedback-item:hover {
+  transform: translateY(-2px);
+
+  
+}
+
 .icon-feedback {
   fill: #080c09;
 }
