@@ -7,7 +7,7 @@
 .section-title {
   font-weight: 700;
   margin-bottom: 16px;
-  font-size: 48px;
+  font-size: 36px;
   line-height: 120%;
   letter-spacing: 0.01em;
   color: #000;
@@ -346,6 +346,10 @@
   .furniture-item {
     width: 340px;
     height: 460px;
+  }
+
+  .section-title {
+    font-size: 48px;
   }
 
   .load-more-mobile {
