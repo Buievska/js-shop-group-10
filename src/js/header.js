@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (!menu || !burgerBtn || !header || !body) {
     return;
   }
+  
   const closeMenu = () => {
     if (menu.classList.contains('is-open')) {
       menu.classList.remove('is-open');
@@ -16,7 +17,8 @@ document.addEventListener('DOMContentLoaded', () => {
       body.classList.remove('no-scroll');
     }
   };
-  const toggleMenu = () => {
+  
+    const toggleMenu = () => {
     const isMenuOpening = menu.classList.toggle('is-open');
     header.classList.toggle('menu-is-open', isMenuOpening);
     body.classList.toggle('no-scroll', isMenuOpening);

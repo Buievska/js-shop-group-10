@@ -80,6 +80,7 @@ nav a:focus,
     opacity: 0.5;
 }
 
+
 .mobil-menu-nav {
     padding: 24px 32px;
     display: flex;
@@ -95,12 +96,41 @@ nav a:focus,
 }
 
 .mobil-menu-nav-item {
+    position: relative; /* для псевдоелемента */
     font-weight: 600;
     font-size: 18px;
     line-height: 1.6;
     color: #080C09;
     text-align: center;
+    transition: color 0.3s ease, opacity 0.3s ease;
+    opacity: 1;
 }
+
+.mobil-menu-nav-item::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 50%;      /* стартує з центру */
+    width: 0;
+    height: 2px;
+    background-color: #6b0609;
+    border-radius: 2px;
+    transition: width 0.3s ease, left 0.3s ease;
+}
+
+.mobil-menu-nav-item:hover,
+.mobil-menu-nav-item:focus-within {
+    color: #6b0609;
+    opacity: 0.5;
+}
+
+.mobil-menu-nav-item:hover::after,
+.mobil-menu-nav-item:focus-within::after {
+    width: 100%;    /* розтягуємо на всю ширину */
+    left: 0;        /* підкреслення починається зліва */
+}
+
+
 
 .menu-shop-btn {
     display: none;
@@ -166,7 +196,6 @@ nav a:focus,
 }
 
 @media screen and (min-width: 1440px) {
-
     .burger-btn,
     .menu {
         display: none;
@@ -177,12 +206,55 @@ nav a:focus,
         display: flex;
     }
 
-    .menu-nav-link {
+    .menu-nav-item {
+        transition: transform 0.3s ease;
+        /* щоб анімація була плавною */
+      }
+      
+      .menu-nav-item:hover,
+      .menu-nav-item:focus-within {
+        transform: scale(1.05);
+        /* збільшення блоку */
+        z-index: 10; /* щоб збільшений елемент був поверх інших */
+      }
+      
+      
+      .menu-nav-link {
         font-weight: 400;
         font-size: 16px;
         line-height: 1.6;
         color: #080C09;
+        box-sizing: border-box;
+        position: relative;
+        transition: 
+            color 0.3s ease,
+            opacity 0.3s ease;
+        opacity: 1;
     }
+    
+    .menu-nav-link::after {
+        content: '';
+        position: absolute;
+        bottom: -4px;
+        left: 50%;          /* починаємо з центру */
+        width: 0;
+        height: 2px;
+        background-color: #6b0609;
+        transition: 
+            width 0.3s ease,
+            left 0.3s ease;
+        border-radius: 2px;
+        transform-origin: center;
+    }
+    
+    .menu-nav-item:hover .menu-nav-link::after,
+    .menu-nav-item:focus-within .menu-nav-link::after {
+        width: 100%;
+        left: 0;        
+    }
+
+    
+
 
     .header-nav {
         display: flex;
