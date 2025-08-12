@@ -1,11 +1,14 @@
 .hero-section {
+  padding-bottom: 24px;
+}
+
+.hero-bg {
   position: relative;
   overflow: hidden;
   padding: 160px 0;
-  margin-bottom: 24px;
 }
 
-.hero-section::before {
+.hero-bg::before {
   content: '';
   position: absolute;
   top: 0;
@@ -16,7 +19,7 @@
   z-index: 0; /* Дуже важливо: оверлей між картинкою (-1) і контентом (1) */
 }
 
-.hero-section .container {
+.hero-bg .container {
   position: relative;
   z-index: 1; /* Гарантує, що контент буде на найвищому шарі */
 }
@@ -80,7 +83,7 @@
 }
 
 @media screen and (min-width: 768px) {
-  .hero-section {
+  .hero-bg {
     padding: 36px 0;
   }
 
@@ -104,11 +107,14 @@
 
 @media screen and (min-width: 1440px) {
   .hero-section {
-    padding: 92px 0;
-    margin-bottom: 40px;
+    padding-bottom: 40px;
   }
 
-  .hero-section::before {
+  .hero-bg {
+    padding: 92px 0;
+  }
+
+  .hero-bg::before {
     background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5));
   }
 }
