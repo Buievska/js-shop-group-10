@@ -582,7 +582,7 @@ async function initPopularSlider() {
 
     const options = {
       modules: [Navigation, Pagination],
-      loop: window.innerWidth < 768,
+      loop: false,
       spaceBetween: 16,
       breakpoints: {
         0: { slidesPerView: 1, centeredSlides: true, spaceBetween: 8 },
@@ -597,13 +597,23 @@ async function initPopularSlider() {
       roundLengths: true,
       watchOverflow: true,
       on: {
-        resize() {
-          this.update();
+        // Подія, що спрацьовує один раз після ініціалізації
+        init: function () {
+          if (btnLeft && btnRight) {
+            // `this` тут - це екземпляр Swiper
+            btnLeft.classList.toggle('btn-disabled', this.isBeginning);
+            btnRight.classList.toggle('btn-disabled', this.isEnd);
+          }
         },
-        beforeResize() {
-          this.updateSize();
-        },
-        slideChange() {
+
+        // Подія, що спрацьовує при кожній зміні слайду
+        slideChange: function () {
+          if (btnLeft && btnRight) {
+            btnLeft.classList.toggle('btn-disabled', this.isBeginning);
+            btnRight.classList.toggle('btn-disabled', this.isEnd);
+          }
+
+          // Ваш існуючий код для індикаторів
           if (indicators) {
             const bullets = indicators.querySelectorAll('.popular-bullet');
             if (bullets.length) {
@@ -613,9 +623,26 @@ async function initPopularSlider() {
               );
             }
           }
+
+          // Ваш існуючий код для довантаження
           const slidesLeft =
             this.slides.length - this.realIndex - this.params.slidesPerView;
           if (slidesLeft <= 3) loadMoreIfNeeded();
+        },
+
+        // Подія при зміні розміру вікна
+        resize: function () {
+          this.update();
+          // Також оновлюємо стан кнопок, оскільки isBeginning/isEnd може змінитися
+          if (btnLeft && btnRight) {
+            btnLeft.classList.toggle('btn-disabled', this.isBeginning);
+            btnRight.classList.toggle('btn-disabled', this.isEnd);
+          }
+        },
+
+        // Інші ваші обробники
+        beforeResize() {
+          this.updateSize();
         },
         reachEnd: () => loadMoreIfNeeded(),
       },
