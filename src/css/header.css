@@ -80,6 +80,7 @@ nav a:focus,
   opacity: 0.5;
 }
 
+
 .mobil-menu-nav {
   padding: 24px 32px;
   display: flex;
@@ -95,12 +96,41 @@ nav a:focus,
 }
 
 .mobil-menu-nav-item {
-  font-weight: 600;
-  font-size: 18px;
-  line-height: 1.6;
-  color: #080c09;
-  text-align: center;
+    position: relative; /* для псевдоелемента */
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 1.6;
+    color: #080C09;
+    text-align: center;
+    transition: color 0.3s ease, opacity 0.3s ease;
+    opacity: 1;
 }
+
+.mobil-menu-nav-item::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 50%;      /* стартує з центру */
+    width: 0;
+    height: 2px;
+    background-color: #6b0609;
+    border-radius: 2px;
+    transition: width 0.3s ease, left 0.3s ease;
+}
+
+.mobil-menu-nav-item:hover,
+.mobil-menu-nav-item:focus-within {
+    color: #6b0609;
+    opacity: 0.5;
+}
+
+.mobil-menu-nav-item:hover::after,
+.mobil-menu-nav-item:focus-within::after {
+    width: 100%;    /* розтягуємо на всю ширину */
+    left: 0;        /* підкреслення починається зліва */
+}
+
+
 
 .menu-shop-btn {
   display: none;
@@ -166,62 +196,106 @@ nav a:focus,
 }
 
 @media screen and (min-width: 1440px) {
-  .burger-btn,
-  .menu {
-    display: none;
-  }
+    .burger-btn,
+    .menu {
+        display: none;
+    }
 
-  .menu-nav-list,
-  .shop-btn {
-    display: flex;
-  }
+    .menu-nav-list,
+    .shop-btn {
+        display: flex;
+    }
 
-  .menu-nav-link {
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 1.6;
-    color: #080c09;
-  }
+    .menu-nav-item {
+        transition: transform 0.3s ease;
+        /* щоб анімація була плавною */
+      }
+      
+      .menu-nav-item:hover,
+      .menu-nav-item:focus-within {
+        transform: scale(1.05);
+        /* збільшення блоку */
+        z-index: 10; /* щоб збільшений елемент був поверх інших */
+      }
+      
+      
+      .menu-nav-link {
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 1.6;
+        color: #080C09;
+        box-sizing: border-box;
+        position: relative;
+        transition: 
+            color 0.3s ease,
+            opacity 0.3s ease;
+        opacity: 1;
+    }
+    
+    .menu-nav-link::after {
+        content: '';
+        position: absolute;
+        bottom: -4px;
+        left: 50%;          /* починаємо з центру */
+        width: 0;
+        height: 2px;
+        background-color: #6b0609;
+        transition: 
+            width 0.3s ease,
+            left 0.3s ease;
+        border-radius: 2px;
+        transform-origin: center;
+    }
+    
+    .menu-nav-item:hover .menu-nav-link::after,
+    .menu-nav-item:focus-within .menu-nav-link::after {
+        width: 100%;
+        left: 0;        
+    }
 
-  .header-nav {
-    display: flex;
-    align-items: center;
-    justify-items: center;
-    flex-direction: row;
-  }
+    
 
-  .header-logo {
-    margin-right: 462px;
-  }
 
-  .menu-nav-list {
-    display: flex;
-    align-items: flex-end;
-    justify-content: flex-start;
-    flex-direction: row;
-    gap: 32px;
-    margin-right: 32px;
-  }
+    .header-nav {
+        display: flex;
+        align-items: center;
+        justify-items: center;
+        flex-direction: row;
+    }
 
-  .shop-btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: row;
-    gap: 8px;
-    border-radius: 100px;
-    padding: 8px 20px;
-    width: 129px;
-    height: 42px;
-    box-shadow: 0 1px 2px 0 rgba(8, 12, 9, 0.05),
-      inset 0 -2px 1px 0 rgba(0, 0, 0, 0.2),
-      inset 0 0 0 1px rgba(8, 12, 9, 0.15),
-      inset 0 2px 1px 0 rgba(255, 255, 255, 0.25),
-      inset 0 32px 24px 0 rgba(255, 255, 255, 0.05);
-    background-color: #6b0609;
-    font-weight: 500;
-    font-size: 16px;
-    line-height: 1.6;
-    color: #fff;
-  }
+    .header-logo {
+        margin-right: 462px;
+    }
+
+    .menu-nav-list {
+        display: flex;
+        align-items: flex-end;
+        justify-content: flex-start;
+        flex-direction: row;
+        gap: 32px;
+        margin-right: 32px;
+    }
+
+    .shop-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: row;
+        gap: 8px;
+        border-radius: 100px;
+        padding: 8px 20px;
+        width: 129px;
+        height: 42px;
+        box-shadow: 0 1px 2px 0 rgba(8, 12, 9, 0.05),
+            inset 0 -2px 1px 0 rgba(0, 0, 0, 0.2),
+            inset 0 0 0 1px rgba(8, 12, 9, 0.15),
+            inset 0 2px 1px 0 rgba(255, 255, 255, 0.25),
+            inset 0 32px 24px 0 rgba(255, 255, 255, 0.05);
+        background-color: #6B0609;
+        font-weight: 500;
+        font-size: 16px;
+        line-height: 1.6;
+        color: #fff;
+    } 
+
 }
