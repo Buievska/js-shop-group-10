@@ -4,6 +4,7 @@
   line-height: 1.6;
   color: #ffffff;
   padding-bottom: 32px;
+  padding-top: 32px;
 }
 .screen-footer {
   display: flex;
@@ -65,8 +66,6 @@
   left: 0;
 }
 
-
-
 .social-list {
   display: flex;
   gap: 24px;
@@ -91,6 +90,10 @@
 }
 
 @media screen and (min-width: 768px) {
+  .footer {
+    padding-top: 16px;
+  }
+
   .nav-footer {
     flex-direction: row;
     justify-content: center;
@@ -104,6 +107,7 @@
 @media screen and (min-width: 1440px) {
   .footer {
     padding-bottom: 0;
+    padding-top: 32px;
   }
   .screen-footer {
     display: flex;
@@ -122,5 +126,4 @@
   .social-list {
     order: 4;
   }
-  
 }

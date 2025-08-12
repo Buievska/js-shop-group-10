@@ -1,7 +1,7 @@
 /* === 📱 Mobile First === */
 
 .furniture-section {
-  padding: 40px 0;
+  padding: 24px 0;
 }
 
 .section-title {
@@ -415,6 +415,10 @@
 }
 
 @media (min-width: 1440px) {
+  .furniture-section {
+    padding: 40px 0;
+  }
+
   .furniture-item {
     width: 300px;
     height: 435px;
